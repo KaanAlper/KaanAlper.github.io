@@ -1,99 +1,88 @@
+<!doctype html>
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <title>couldbefit — kaan alper</title>
-<meta name="description" content="couldbefit — an offline-first, dark training journal for Android. Meals, workouts and an in-app advisor. On Google Play.">
+<meta name="description" content="couldbefit — an offline-first Android training journal with meals, workouts and an on-device AI advisor. No account, no cloud. On Google Play.">
+<link rel="canonical" href="https://kaanalper.github.io/couldbefit/">
+<meta property="og:title" content="couldbefit — offline training journal with an on-device AI advisor">
+<meta property="og:description" content="Meals, workouts and a local AI advisor that runs entirely on your phone. No account, no cloud.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kaanalper.github.io/couldbefit/">
+<meta property="og:image" content="https://kaanalper.github.io/couldbefit/app-meals.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@500..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#131814; --panel:#1c231e; --line:rgba(255,255,255,.09);
-  --grn:#59d08a; --grn2:#8fe3b0; --ink:#e9f0ea; --muted:#9aab9f; --faint:#71806f;
+  --bg:#0f120d; --panel:#181d15; --line:rgba(255,255,255,.09);
+  --grn:#ccff33; --grn2:#e2ff7a; --ink:#eef2e6; --muted:#9fac91; --faint:#77826b;
   --disp:'Bricolage Grotesque',system-ui,sans-serif; --hand:'Caveat',cursive; --mono:'Space Mono',ui-monospace,monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:var(--mono);background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.6}
 .glow{position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(58% 42% at 82% -6%, rgba(89,208,138,.16), transparent 60%),radial-gradient(50% 40% at 6% 106%, rgba(89,208,138,.08), transparent 60%)}
+  background:radial-gradient(56% 42% at 82% -6%, rgba(204,255,51,.13), transparent 60%),radial-gradient(50% 40% at 4% 106%, rgba(204,255,51,.07), transparent 60%)}
 .grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .wrap{max-width:1080px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
 nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
-  padding:16px 32px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;background:linear-gradient(to bottom,rgba(19,24,20,.86),rgba(19,24,20,0))}
+  padding:16px 32px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;background:linear-gradient(to bottom,rgba(15,18,13,.88),rgba(15,18,13,0))}
 nav .back{color:var(--ink);text-decoration:none;font-weight:700}nav .back:hover{color:var(--grn)}
-nav .lk{display:flex;gap:20px}nav .lk a{color:var(--muted);text-decoration:none}nav .lk a:hover{color:var(--grn)}
+nav .lk a{color:var(--muted);text-decoration:none;font-weight:700}nav .lk a:hover{color:var(--grn)}
 
-.gplay{display:inline-flex;align-items:center;gap:11px;background:#000;border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:10px 20px;text-decoration:none;transition:transform .18s ease}
+.gplay{display:inline-flex;align-items:center;gap:11px;background:#000;border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:11px 20px;text-decoration:none;transition:transform .18s ease}
 .gplay:hover{transform:translateY(-2px)}
 .gplay svg{width:24px;height:24px}
 .gplay .t{line-height:1.05}
-.gplay .t small{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#cfcfcf}
+.gplay .t small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#cfcfcf}
 .gplay .t b{font-family:var(--disp);font-weight:700;font-size:17px;color:#fff}
 
-.hero{padding:150px 0 30px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
-.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--grn);margin-bottom:18px}
+.hero{padding:150px 0 40px;display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--grn);margin-bottom:18px}
 h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter-spacing:-2.5px;line-height:.9;color:#fff}
-.hero .hand{font-family:var(--hand);font-size:32px;color:var(--grn2);display:block;margin-top:8px;transform:rotate(-2deg)}
-.lead{font-family:var(--mono);font-size:14px;color:var(--muted);margin:22px 0 0;line-height:1.85;max-width:52ch}
+.hero .hand{font-family:var(--hand);font-size:33px;color:var(--grn2);display:block;margin-top:8px;transform:rotate(-2deg)}
+.lead{font-family:var(--mono);font-weight:700;font-size:14.5px;color:#c3cdb6;margin:22px 0 0;line-height:1.85;max-width:54ch}
+.lead b{color:#fff;border-bottom:1px solid rgba(204,255,51,.5)}
 .cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:28px}
 .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;font-family:var(--mono);font-size:12px;color:var(--faint)}
-.tags span{padding:5px 11px;border:1px solid var(--line);border-radius:999px}
+.tags span{padding:6px 12px;border:1px solid var(--line);border-radius:999px}
 
-/* phone mockups */
-.phone{justify-self:center;width:270px;aspect-ratio:9/19;background:#0d110e;border-radius:34px;border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 50px 100px -40px rgba(0,0,0,.9);padding:14px 12px;position:relative}
-.phone::before{content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);width:70px;height:5px;border-radius:3px;background:#2a332c}
-.scr{margin-top:16px}
-.scr .h{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
-.scr .h b{font-family:var(--disp);font-weight:800;color:#fff;font-size:16px}
-.scr .h span{color:var(--faint);font-size:10px}
-.ring{width:150px;height:150px;border-radius:50%;margin:20px auto 8px;display:grid;place-items:center;background:conic-gradient(var(--grn) 0 68%, #2a332c 68% 100%);position:relative}
-.ring::before{content:"";position:absolute;inset:13px;border-radius:50%;background:#0d110e}
-.ring .kc{position:relative;text-align:center}.ring .kc b{font-family:var(--disp);font-weight:800;color:#fff;font-size:26px;display:block;line-height:1}
-.ring .kc small{color:var(--muted);font-size:9px;letter-spacing:.1em}
-.mac{display:flex;gap:8px;margin:6px 4px 16px}
-.mac div{flex:1;text-align:center;font-size:9px;color:var(--muted)}
-.mac b{display:block;color:#fff;font-family:var(--disp);font-weight:700;font-size:13px}
-.mac i{display:block;height:4px;border-radius:2px;margin-top:5px;background:var(--grn);opacity:.85}
-.rows .r{display:flex;justify-content:space-between;align-items:center;background:#171d18;border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-bottom:7px;font-size:11px}
-.rows .r b{font-family:var(--disp);font-weight:700;color:#fff;font-size:12px}
-.rows .r span{color:var(--grn2);font-size:10px}
-.rows .r small{color:var(--faint);font-size:9px}
-.addset{margin-top:9px;text-align:center;background:var(--grn);color:#0f1a12;font-family:var(--disp);font-weight:800;font-size:12px;border-radius:10px;padding:10px}
-.chart{display:flex;align-items:flex-end;justify-content:space-between;gap:5px;height:96px;margin:22px 4px 14px}
-.chart i{flex:1;background:linear-gradient(var(--grn),#2f8f5f);border-radius:3px 3px 0 0;opacity:.9}
-.tip{background:#171d18;border:1px solid var(--line);border-left:3px solid var(--grn);border-radius:8px;padding:11px 12px;font-size:10.5px;color:var(--grn2);line-height:1.5}
-.tip b{color:#fff;font-family:var(--disp);font-weight:700;display:block;font-size:11px;margin-bottom:3px}
+.pf{width:100%;max-width:266px;justify-self:center;border-radius:40px;border:9px solid #05060a;background:#05060a;
+  box-shadow:0 50px 100px -42px rgba(0,0,0,.95), 0 0 0 1px rgba(255,255,255,.05);overflow:hidden}
+.pf img{width:100%;display:block}
 
-.sec{padding:70px 0}
-.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--grn);margin-bottom:14px}
+.sec{padding:72px 0}
+.kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--grn);margin-bottom:14px}
 .sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(28px,4.5vw,44px);letter-spacing:-1.5px;color:#fff;margin-bottom:20px}
-.sec p.body{font-family:var(--mono);font-size:14px;color:var(--muted);max-width:62ch;line-height:1.9}
-.sec p.body b{color:var(--ink);font-weight:400;border-bottom:1px solid rgba(89,208,138,.4)}
+.sec p.body{font-family:var(--mono);font-size:14.5px;color:#b9c3ac;max-width:64ch;line-height:1.9}
+.sec p.body b{color:#fff;font-weight:400;border-bottom:1px solid rgba(204,255,51,.45)}
 
-.screens{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:16px}
+.screens{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:16px}
 .screens .col{display:flex;flex-direction:column;align-items:center}
-.screens .phone{width:100%;max-width:236px}
-.screens .cap{font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:16px}
+.screens .pf{max-width:250px}
+.screens .cap{font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:18px}
 
 .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}
 .fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.fcard.hi{border-color:rgba(204,255,51,.4);background:linear-gradient(160deg,rgba(204,255,51,.06),var(--panel))}
 .fcard svg{width:28px;height:28px;margin-bottom:12px}
 .fcard h3{font-family:var(--disp);font-weight:700;font-size:18px;color:#fff;margin-bottom:7px;letter-spacing:-.3px}
-.fcard p{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7}
+.fcard p{font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.7}
+.fcard .badge{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0f140a;background:var(--grn);border-radius:5px;padding:3px 7px;margin-bottom:12px}
 .tech{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.tech span{font-family:var(--mono);font-size:12px;color:var(--muted);padding:8px 14px;border:1px solid var(--line);border-radius:999px}
+.tech span{font-family:var(--mono);font-size:12.5px;color:var(--muted);padding:8px 14px;border:1px solid var(--line);border-radius:999px}
 
 .foot{padding:80px 0 70px;text-align:center;border-top:1px solid var(--line);margin-top:50px}
 .foot .h{font-family:var(--hand);font-size:28px;color:var(--grn2);margin-bottom:18px;display:block}
-.foot .back2{display:block;margin-top:30px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.foot .back2{display:block;margin-top:30px;font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none}
 .foot .back2:hover{color:var(--grn)}
 
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
-@media (max-width:800px){.hero{grid-template-columns:1fr;text-align:center}.lead{margin-left:auto;margin-right:auto}.cta,.tags{justify-content:center}.feat,.screens{grid-template-columns:1fr}.screens .phone{max-width:270px}h1{font-size:clamp(44px,13vw,72px)}}
+@media (max-width:800px){.hero{grid-template-columns:1fr;text-align:center}.lead{margin-left:auto;margin-right:auto}.cta,.tags{justify-content:center}.feat,.screens{grid-template-columns:1fr}.screens .pf,.hero .pf{max-width:280px}h1{font-size:clamp(44px,13vw,72px)}}
 </style>
 
 <div class="glow"></div><div class="grain"></div>
@@ -106,83 +95,41 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter
   <div>
     <div class="eyebrow">android · offline training journal</div>
     <h1>couldbefit<span class="hand">your pocket gym, offline</span></h1>
-    <p class="lead">A dark, lightweight training journal for people who just want to log and move on. Plan meals, track workouts and follow an in-app advisor — built with Kotlin &amp; Jetpack Compose, fully offline: no account, no cloud, no tracking. Out now on Google Play.</p>
+    <p class="lead">A dark, offline-first training journal for people who just want to log and move on. Track <b>meals</b> and macros, log <b>workouts</b> with history, and chat with an <b>AI advisor that runs on your phone</b> — a local model, no account, no cloud, no tracking. Out now on Google Play.</p>
     <div class="cta">
       <a class="gplay" href="https://play.google.com/store/apps/details?id=com.kaan.couldbefit" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00c3ff" d="M3.6 2.3C3.3 2.6 3.1 3 3.1 3.6v16.8c0 .6.2 1 .5 1.3l.1.1L13 12.1v-.2L3.6 2.3z"/><path fill="#00e676" d="M16.2 15.3l-3.2-3.2v-.2l3.2-3.2.1.1 3.8 2.2c1.1.6 1.1 1.6 0 2.2l-3.9 2.1z"/><path fill="#ff3a44" d="M16.3 15.2L13 11.9 3.6 21.4c.4.4 1 .4 1.6.1l11.1-6.3"/><path fill="#ffab00" d="M16.3 8.8L5.2 2.5c-.6-.3-1.2-.3-1.6.1L13 12.1l3.3-3.3z"/></svg>
         <span class="t"><small>get it on</small><b>Google Play</b></span>
       </a>
     </div>
-    <div class="tags"><span>Kotlin</span><span>Jetpack Compose</span><span>Room</span><span>Material 3</span><span>100% offline</span></div>
+    <div class="tags"><span>Kotlin</span><span>Jetpack Compose</span><span>Room</span><span>On-device LLM</span><span>100% offline</span></div>
   </div>
-  <div class="phone reveal">
-    <div class="scr">
-      <div class="h"><b>couldbefit</b><span>· today</span></div>
-      <div class="ring"><div class="kc"><b>1,840</b><small>KCAL LEFT</small></div></div>
-      <div class="mac">
-        <div>PROTEIN<b>142g</b><i style="width:80%"></i></div>
-        <div>CARBS<b>190g</b><i style="width:60%"></i></div>
-        <div>FAT<b>54g</b><i style="width:45%"></i></div>
-      </div>
-      <div class="rows">
-        <div class="r"><div><b>Push day</b><br><small>chest · shoulders · triceps</small></div><span>6 sets ✓</span></div>
-        <div class="r"><div><b>Bench press</b><br><small>4 × 8 · 60kg</small></div><span>done</span></div>
-      </div>
-    </div>
-  </div>
+  <div class="pf reveal"><img src="./app-workout.webp" width="1220" height="2594" alt="couldbefit — workout screen with exercises and set history"></div>
 </header>
 
 <section class="sec">
   <div class="wrap reveal">
     <div class="kicker">what it is</div>
     <h2>A gym log that respects your time — and your data.</h2>
-    <p class="body">Most fitness apps want an account, a subscription and your location. couldbefit wants none of that. Everything lives <b>on your device</b> in a local database, works with <b>no internet</b>, and stays out of your way: open it, log a set or a meal, close it. A single-purpose tool built the way I wanted one to feel — dark, fast and quiet — and shipped to <b>Google Play</b>.</p>
+    <p class="body">Most fitness apps want an account, a subscription and your location. couldbefit wants none of that. Everything lives <b>on your device</b> in a local database, works with <b>no internet</b>, and stays out of your way. It even runs its <b>AI advisor on-device</b> — a local model you download once and then chat with completely offline. Open it, log a set or a meal, ask a question, close it.</p>
   </div>
 </section>
 
 <section class="sec">
   <div class="wrap">
-    <div class="reveal"><div class="kicker">the app</div><h2>Three taps from open to logged.</h2></div>
+    <div class="reveal"><div class="kicker">the app</div><h2>Log, eat, ask — all in the dark.</h2></div>
     <div class="screens">
       <div class="col reveal">
-        <div class="phone"><div class="scr">
-          <div class="h"><b>Push day</b><span>· 45 min</span></div>
-          <div class="rows" style="margin-top:14px">
-            <div class="r"><div><b>Bench press</b><br><small>4 × 8 · 60kg</small></div><span>✓</span></div>
-            <div class="r"><div><b>Incline DB</b><br><small>3 × 10 · 22kg</small></div><span>✓</span></div>
-            <div class="r"><div><b>Overhead press</b><br><small>3 × 10 · 30kg</small></div><small>2/3</small></div>
-            <div class="r"><div><b>Triceps rope</b><br><small>3 × 15</small></div><small>next</small></div>
-          </div>
-          <div class="addset">+ log a set</div>
-        </div></div>
-        <div class="cap">workout logging</div>
+        <div class="pf"><img src="./app-workout.webp" width="1220" height="2594" loading="lazy" alt="couldbefit workout screen"></div>
+        <div class="cap">workout &amp; history</div>
       </div>
       <div class="col reveal">
-        <div class="phone"><div class="scr">
-          <div class="h"><b>Meals</b><span>· 2,140 kcal</span></div>
-          <div class="mac" style="margin-top:16px">
-            <div>PROTEIN<b>142g</b><i style="width:80%"></i></div>
-            <div>CARBS<b>190g</b><i style="width:62%"></i></div>
-            <div>FAT<b>54g</b><i style="width:46%"></i></div>
-          </div>
-          <div class="rows">
-            <div class="r"><div><b>Breakfast</b><br><small>oats · eggs · banana</small></div><span>620</span></div>
-            <div class="r"><div><b>Lunch</b><br><small>chicken · rice</small></div><span>780</span></div>
-            <div class="r"><div><b>Snack</b><br><small>yogurt · nuts</small></div><span>320</span></div>
-          </div>
-        </div></div>
+        <div class="pf"><img src="./app-meals.webp" width="1220" height="2594" loading="lazy" alt="couldbefit meals and macros screen"></div>
         <div class="cap">meals &amp; macros</div>
       </div>
       <div class="col reveal">
-        <div class="phone"><div class="scr">
-          <div class="h"><b>Progress</b><span>· 8 weeks</span></div>
-          <div class="chart">
-            <i style="height:40%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:64%"></i><i style="height:82%"></i><i style="height:95%"></i>
-          </div>
-          <div class="rows"><div class="r"><div><b>Volume</b><br><small>this week</small></div><span>+12%</span></div></div>
-          <div class="tip" style="margin-top:8px"><b>Advisor</b>You're 15g under on protein — add a scoop to hit today's target.</div>
-        </div></div>
-        <div class="cap">in-app advisor</div>
+        <div class="pf"><img src="./app-advisor.webp" width="1220" height="2594" loading="lazy" alt="couldbefit on-device AI advisor screen"></div>
+        <div class="cap">on-device AI advisor</div>
       </div>
     </div>
   </div>
@@ -192,12 +139,12 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter
   <div class="wrap">
     <div class="reveal"><div class="kicker">features</div><h2>Everything you log, nothing you don't.</h2></div>
     <div class="feat">
-      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9l6 3"/><path d="M17 3l4 1-1 4"/></svg><h3>100% offline</h3><p>A local Room database — no account, no cloud sync, no analytics. Your training stays yours.</p></div>
-      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18M6 8h12l-2 4 2 4H6"/></svg><h3>Meals &amp; macros</h3><p>Log meals and watch protein, carbs and fat fill up against your daily target at a glance.</p></div>
-      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/></svg><h3>Workout logging</h3><p>Build routines, log sets, reps and weight, and let the app carry your progress forward.</p></div>
-      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 6H21l-5 4 2 6-6-4-6 4 2-6-5-4h6.5z"/></svg><h3>In-app advisor</h3><p>Guidance on targets and progression, built in — no forum, no guru, no upsell.</p></div>
-      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="3"/><path d="M11 6h2"/></svg><h3>Dark &amp; Compose</h3><p>A pure Jetpack Compose UI, dark by default, tuned to be light on the eyes and on the battery.</p></div>
-      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><h3>Private by design</h3><p>Nothing leaves the phone. No sign-up wall between you and your first logged set.</p></div>
+      <div class="fcard hi reveal"><span class="badge">on-device</span><svg viewBox="0 0 24 24" fill="none" stroke="#ccff33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9h.01M15 9h.01M9 14c1 1 5 1 6 0"/></svg><h3>AI advisor, offline</h3><p>A local language model runs entirely on your phone — ask about training or nutrition with no account and no data leaving the device.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#ccff33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/></svg><h3>Workout logging</h3><p>Build routines, log sets, reps and weight, and see your last session inline so you always know what to beat.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#ccff33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18M6 8h12l-2 4 2 4H6"/></svg><h3>Meals &amp; macros</h3><p>Log foods per meal and watch calories and protein fill up against a target set from your BMI and goals.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#ccff33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9l6 3"/><path d="M17 3l4 1-1 4"/></svg><h3>100% offline</h3><p>A local Room database — no account, no cloud sync, no analytics. Your training and your chats stay yours.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#ccff33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V9m5 9V5m5 13v-6m5 6V8"/></svg><h3>Smart targets</h3><p>Calorie goals from your profile, plus optional ACSM-MET workout-burn added back to your daily target.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#ccff33" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="3"/><path d="M11 6h2"/></svg><h3>Dark &amp; Compose</h3><p>A pure Jetpack Compose UI, dark by default, tuned to be light on the eyes and on the battery.</p></div>
     </div>
   </div>
 </section>
@@ -205,7 +152,7 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter
 <section class="sec">
   <div class="wrap reveal">
     <div class="kicker">built with</div>
-    <div class="tech"><span>Kotlin</span><span>Jetpack Compose</span><span>Room</span><span>Coroutines / Flow</span><span>Material 3</span><span>MVVM</span></div>
+    <div class="tech"><span>Kotlin</span><span>Jetpack Compose</span><span>Room</span><span>On-device LLM</span><span>Coroutines / Flow</span><span>Material 3</span></div>
   </div>
 </section>
 
@@ -221,6 +168,6 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter
 </footer>
 
 <script>
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
 </script>
