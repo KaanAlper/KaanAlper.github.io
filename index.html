@@ -5,12 +5,13 @@
 <meta property="og:title" content="kaan alper — portfolio">
 <meta property="og:description" content="Software that sees, maps & connects.">
 <meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@500..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#33261a; --soft:#6d583d; --faint:#9c855f;
+  --ink:#2b2012; --soft:#574018; --faint:#7a6234;
   --red:#e0503a; --yellow:#f2a835; --teal:#3f9683;
   --disp:'Bricolage Grotesque',system-ui,sans-serif; --hand:'Caveat',cursive; --mono:'Space Mono',ui-monospace,monospace;
   --navc:#33261a;
@@ -67,7 +68,7 @@ section{position:relative;padding:0 40px}
 .hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(44px,8.4vw,108px);line-height:.86;letter-spacing:-2px;text-transform:uppercase;color:var(--ink);text-shadow:0 2px 0 rgba(255,250,235,.5),0 6px 18px rgba(90,60,20,.14)}
 .hero h1 .r{color:var(--red)}.hero h1 .y{color:var(--yellow)}
 .hero .sq{display:block;width:min(430px,52%);margin:8px auto 0;height:18px}
-.hero .sub{font-family:var(--mono);font-size:13px;color:var(--soft);max-width:52ch;margin:22px auto 0;line-height:1.7}
+.hero .sub{font-family:var(--mono);font-weight:700;font-size:15px;color:#3d2d16;max-width:54ch;margin:22px auto 0;line-height:1.75;text-shadow:0 1px 2px rgba(255,250,235,.6)}
 .cue{margin-top:40px;font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:8px}
 .cue svg{animation:bob 1.8s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
@@ -83,7 +84,7 @@ a.pin,a.pin *{text-decoration:none;color:inherit}
 /* section başlık */
 .shead{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
 .shead .n{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.1em}
-.shead h2{font-family:var(--disp);font-weight:800;font-size:clamp(30px,5vw,56px);letter-spacing:-1.5px;color:var(--ink)}
+.shead h2{font-family:var(--disp);font-weight:800;font-size:clamp(32px,5.2vw,58px);letter-spacing:-1.5px;color:var(--ink);text-shadow:0 2px 3px rgba(255,250,235,.5)}
 .slabel{color:var(--soft)}
 
 /* WORK */
@@ -97,9 +98,9 @@ a.pin,a.pin *{text-decoration:none;color:inherit}
 .card .k svg{width:34px;height:34px}
 .card .k .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .card h3{font-family:var(--disp);font-weight:800;font-size:32px;letter-spacing:-1px;color:var(--ink);margin-bottom:10px}
-.card p{font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--soft);margin-bottom:16px}
+.card p{font-family:var(--mono);font-size:13.5px;line-height:1.75;color:#453a22;margin-bottom:16px}
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
-.chip{font-family:var(--mono);font-size:10.5px;padding:5px 11px;border-radius:999px;background:#f1e6d0;border:1px solid #e2cfa9;color:var(--soft)}
+.chip{font-family:var(--mono);font-weight:700;font-size:11px;padding:6px 12px;border-radius:999px;background:#f1e6d0;border:1px solid #dcc79c;color:#4a3a22}
 .links{display:flex;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 .links a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--yellow);padding-bottom:2px}
 .links a:hover{color:var(--red)}
@@ -115,7 +116,7 @@ a.vis:hover{transform:translateY(-5px);box-shadow:-10px 22px 42px -12px rgba(48,
 .mcard .k{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .mcard .k svg{width:26px;height:26px}.mcard .k .tag{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
 .mcard h5{font-family:var(--disp);font-weight:800;font-size:20px;color:var(--ink);margin-bottom:7px;letter-spacing:-.3px}
-.mcard p{font-family:var(--mono);font-size:11px;line-height:1.65;color:var(--soft);margin-bottom:12px}
+.mcard p{font-family:var(--mono);font-size:12.5px;line-height:1.7;color:#453a22;margin-bottom:12px}
 .mcard .gh{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);border-bottom:2px solid var(--yellow);padding-bottom:2px}
 .mcard:hover .gh{color:var(--red)}
 .allrepos{margin-top:24px;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
@@ -126,7 +127,7 @@ a.vis:hover{transform:translateY(-5px);box-shadow:-10px 22px 42px -12px rgba(48,
 /* ABOUT */
 .about{padding:14vh 40px 12vh}
 .about .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;margin-top:30px}
-.about p.bio{font-family:var(--mono);font-size:14px;line-height:1.9;color:var(--ink)}
+.about p.bio{font-family:var(--mono);font-weight:700;font-size:15.5px;line-height:1.9;color:#2b2012;text-shadow:0 1px 2px rgba(255,250,235,.55)}
 .about p.bio .hl{color:var(--red)}
 .skillgrp{margin-top:26px}
 .skillgrp h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:9px}
@@ -134,8 +135,8 @@ a.vis:hover{transform:translateY(-5px);box-shadow:-10px 22px 42px -12px rgba(48,
 .tl .it{position:relative}
 .tl .it::before{content:"";position:absolute;left:-27px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--yellow);border:2px solid #fff}
 .tl .yr{font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:.06em}
-.tl .ti{font-family:var(--disp);font-weight:800;font-size:19px;color:var(--ink);margin:2px 0}
-.tl .ds{font-family:var(--mono);font-size:11.5px;color:var(--soft);line-height:1.6}
+.tl .ti{font-family:var(--disp);font-weight:800;font-size:20px;color:var(--ink);margin:2px 0;text-shadow:0 1px 2px rgba(255,250,235,.5)}
+.tl .ds{font-family:var(--mono);font-weight:700;font-size:12.5px;color:#463a22;line-height:1.65;text-shadow:0 1px 2px rgba(255,250,235,.5)}
 
 /* CONTACT (gece) */
 .contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#f3ead6}
