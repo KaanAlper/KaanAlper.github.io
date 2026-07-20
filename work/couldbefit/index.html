@@ -10,7 +10,7 @@
 <meta property="og:description" content="Meals, workouts and a local AI advisor that runs entirely on your phone. No account, no cloud.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kaanalper.github.io/work/couldbefit/">
-<meta property="og:image" content="https://kaanalper.github.io/work/couldbefit/app-meals.webp">
+<meta property="og:image" content="https://kaanalper.github.io/work/couldbefit/promo-workout.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@500..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -35,34 +35,31 @@ nav .lk a{color:var(--muted);text-decoration:none;font-weight:700}nav .lk a:hove
 .gplay{display:inline-flex;align-items:center;gap:11px;background:#000;border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:11px 20px;text-decoration:none;transition:transform .18s ease}
 .gplay:hover{transform:translateY(-2px)}
 .gplay svg{width:24px;height:24px}
-.gplay .t{line-height:1.05}
+.gplay .t{line-height:1.05;text-align:left}
 .gplay .t small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#cfcfcf}
 .gplay .t b{font-family:var(--disp);font-weight:700;font-size:17px;color:#fff}
 
-.hero{padding:150px 0 40px;display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.hero{padding:150px 0 30px;text-align:center}
 .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--grn);margin-bottom:18px}
-h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter-spacing:-2.5px;line-height:.9;color:#fff}
-.hero .hand{font-family:var(--hand);font-size:33px;color:var(--grn2);display:block;margin-top:8px;transform:rotate(-2deg)}
-.lead{font-family:var(--mono);font-weight:700;font-size:14.5px;color:#c3cdb6;margin:22px 0 0;line-height:1.85;max-width:54ch}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(52px,10vw,116px);letter-spacing:-3px;line-height:.9;color:#fff}
+.hero .hand{font-family:var(--hand);font-size:34px;color:var(--grn2);display:block;margin-top:8px;transform:rotate(-2deg)}
+.lead{font-family:var(--mono);font-weight:700;font-size:14.5px;color:#c3cdb6;margin:24px auto 0;line-height:1.85;max-width:60ch}
 .lead b{color:#fff;border-bottom:1px solid rgba(204,255,51,.5)}
-.cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:28px}
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;font-family:var(--mono);font-size:12px;color:var(--faint)}
+.cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:30px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--faint)}
 .tags span{padding:6px 12px;border:1px solid var(--line);border-radius:999px}
 
-.pf{width:100%;max-width:266px;justify-self:center;border-radius:40px;border:9px solid #05060a;background:#05060a;
-  box-shadow:0 50px 100px -42px rgba(0,0,0,.95), 0 0 0 1px rgba(255,255,255,.05);overflow:hidden}
-.pf img{width:100%;display:block}
+.showcase{margin:56px auto 0}
+.showcase img{width:100%;display:block;border-radius:18px;border:1px solid var(--line);box-shadow:0 40px 90px -40px rgba(0,0,0,.9)}
 
-.sec{padding:72px 0}
+.sec{padding:78px 0}
 .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--grn);margin-bottom:14px}
-.sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(28px,4.5vw,44px);letter-spacing:-1.5px;color:#fff;margin-bottom:20px}
+.sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(28px,4.5vw,46px);letter-spacing:-1.5px;color:#fff;margin-bottom:20px}
 .sec p.body{font-family:var(--mono);font-size:14.5px;color:#b9c3ac;max-width:64ch;line-height:1.9}
 .sec p.body b{color:#fff;font-weight:400;border-bottom:1px solid rgba(204,255,51,.45)}
 
-.screens{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:16px}
-.screens .col{display:flex;flex-direction:column;align-items:center}
-.screens .pf{max-width:250px}
-.screens .cap{font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+.gallery{display:flex;flex-direction:column;gap:22px;margin-top:10px}
+.gallery img{width:100%;display:block;border-radius:16px;border:1px solid var(--line);box-shadow:0 30px 70px -40px rgba(0,0,0,.85)}
 
 .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}
 .fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
@@ -82,7 +79,7 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
-@media (max-width:800px){.hero{grid-template-columns:1fr;text-align:center}.lead{margin-left:auto;margin-right:auto}.cta,.tags{justify-content:center}.feat,.screens{grid-template-columns:1fr}.screens .pf,.hero .pf{max-width:280px}h1{font-size:clamp(44px,13vw,72px)}}
+@media (max-width:800px){.feat{grid-template-columns:1fr}h1{font-size:clamp(46px,15vw,78px)}}
 </style>
 
 <div class="glow"></div><div class="grain"></div>
@@ -91,8 +88,8 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter
   <div class="lk"><a href="https://play.google.com/store/apps/details?id=com.kaan.couldbefit" target="_blank" rel="noopener">google play ↗</a></div>
 </nav>
 
-<header class="hero wrap">
-  <div>
+<header class="hero">
+  <div class="wrap">
     <div class="eyebrow">android · offline training journal</div>
     <h1>couldbefit<span class="hand">your pocket gym, offline</span></h1>
     <p class="lead">A dark, offline-first training journal for people who just want to log and move on. Track <b>meals</b> and macros, log <b>workouts</b> with history, and chat with an <b>AI advisor that runs on your phone</b> — a local model, no account, no cloud, no tracking. Out now on Google Play.</p>
@@ -104,7 +101,7 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter
     </div>
     <div class="tags"><span>Kotlin</span><span>Jetpack Compose</span><span>Room</span><span>On-device LLM</span><span>100% offline</span></div>
   </div>
-  <div class="pf reveal"><img src="./app-workout.webp" width="1220" height="2594" alt="couldbefit — workout screen with exercises and set history"></div>
+  <div class="wrap showcase reveal"><img src="./promo-workout.webp" width="1600" height="900" alt="couldbefit — log every set: workout screen with exercises and history"></div>
 </header>
 
 <section class="sec">
@@ -118,19 +115,9 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter
 <section class="sec">
   <div class="wrap">
     <div class="reveal"><div class="kicker">the app</div><h2>Log, eat, ask — all in the dark.</h2></div>
-    <div class="screens">
-      <div class="col reveal">
-        <div class="pf"><img src="./app-workout.webp" width="1220" height="2594" loading="lazy" alt="couldbefit workout screen"></div>
-        <div class="cap">workout &amp; history</div>
-      </div>
-      <div class="col reveal">
-        <div class="pf"><img src="./app-meals.webp" width="1220" height="2594" loading="lazy" alt="couldbefit meals and macros screen"></div>
-        <div class="cap">meals &amp; macros</div>
-      </div>
-      <div class="col reveal">
-        <div class="pf"><img src="./app-advisor.webp" width="1220" height="2594" loading="lazy" alt="couldbefit on-device AI advisor screen"></div>
-        <div class="cap">on-device AI advisor</div>
-      </div>
+    <div class="gallery">
+      <img class="reveal" src="./promo-meals.webp" width="1600" height="900" loading="lazy" alt="couldbefit — every meal counts: meals and macros screen">
+      <img class="reveal" src="./promo-advisor.webp" width="1600" height="900" loading="lazy" alt="couldbefit — your coach on-device: the offline AI advisor answering a question">
     </div>
   </div>
 </section>
