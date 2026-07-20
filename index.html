@@ -49,7 +49,7 @@ body{font-family:var(--mono);color:var(--ink);background:#0e1230;overflow-x:hidd
 
 /* ── NAV ── */
 .nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
-  padding:16px 40px 24px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--navc);
+  padding:16px 40px 24px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--navc);
   background:linear-gradient(to bottom,rgba(248,236,208,.72),rgba(248,236,208,0))}
 .nav .b{font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.5px}
 .nav .lk{display:flex;gap:22px;align-items:center}
@@ -69,7 +69,7 @@ section{position:relative;padding:0 40px}
 .hero h1 .r{color:var(--red)}.hero h1 .y{color:var(--yellow)}
 .hero .sq{display:block;width:min(430px,52%);margin:8px auto 0;height:18px}
 .hero .sub{font-family:var(--mono);font-weight:700;font-size:15px;color:#3d2d16;max-width:54ch;margin:22px auto 0;line-height:1.75;text-shadow:0 1px 2px rgba(255,250,235,.6)}
-.cue{margin-top:40px;font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:8px}
+.cue{margin-top:40px;font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:8px}
 .cue svg{animation:bob 1.8s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 /* hero saçılan notlar */
@@ -83,7 +83,7 @@ a.pin,a.pin *{text-decoration:none;color:inherit}
 
 /* section başlık */
 .shead{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
-.shead .n{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.1em}
+.shead .n{font-family:var(--mono);font-weight:700;font-size:13.5px;color:var(--faint);letter-spacing:.1em}
 .shead h2{font-family:var(--disp);font-weight:800;font-size:clamp(32px,5.2vw,58px);letter-spacing:-1.5px;color:var(--ink);text-shadow:0 2px 3px rgba(255,250,235,.5)}
 .slabel{color:var(--soft)}
 
@@ -96,12 +96,12 @@ a.pin,a.pin *{text-decoration:none;color:inherit}
 .panel:nth-child(even) .card{transform:rotate(1.2deg)}
 .card .k{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .card .k svg{width:34px;height:34px}
-.card .k .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.card .k .tag{font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .card h3{font-family:var(--disp);font-weight:800;font-size:32px;letter-spacing:-1px;color:var(--ink);margin-bottom:10px}
 .card p{font-family:var(--mono);font-size:13.5px;line-height:1.75;color:#453a22;margin-bottom:16px}
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
 .chip{font-family:var(--mono);font-weight:700;font-size:11px;padding:6px 12px;border-radius:999px;background:#f1e6d0;border:1px solid #dcc79c;color:#4a3a22}
-.links{display:flex;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.links{display:flex;gap:16px;font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
 .links a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--yellow);padding-bottom:2px}
 .links a:hover{color:var(--red)}
 .links .muted{color:var(--faint);border-color:#d8c6a2}
@@ -109,17 +109,17 @@ a.pin,a.pin *{text-decoration:none;color:inherit}
 a.vis:hover{transform:translateY(-5px);box-shadow:-10px 22px 42px -12px rgba(48,30,8,.42)}
 .links a.muted{border-color:transparent;cursor:default}
 .more{margin-top:13vh}
-.more .mh{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:20px}
+.more .mh{font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:20px}
 .mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .mcard{background:#fcf7ec;border:1px solid #ecdcbe;border-radius:12px;padding:20px;box-shadow:-5px 11px 22px -8px rgba(48,30,8,.26);transition:transform .2s ease,box-shadow .2s ease;text-decoration:none;display:block}
 .mcard:hover{transform:translateY(-4px);box-shadow:-7px 15px 28px -8px rgba(48,30,8,.34)}
 .mcard .k{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.mcard .k svg{width:26px;height:26px}.mcard .k .tag{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.mcard .k svg{width:26px;height:26px}.mcard .k .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 .mcard h5{font-family:var(--disp);font-weight:800;font-size:20px;color:var(--ink);margin-bottom:7px;letter-spacing:-.3px}
 .mcard p{font-family:var(--mono);font-size:12.5px;line-height:1.7;color:#453a22;margin-bottom:12px}
-.mcard .gh{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);border-bottom:2px solid var(--yellow);padding-bottom:2px}
+.mcard .gh{font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);border-bottom:2px solid var(--yellow);padding-bottom:2px}
 .mcard:hover .gh{color:var(--red)}
-.allrepos{margin-top:24px;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.allrepos{margin-top:24px;text-align:center;font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase}
 .allrepos a{color:var(--soft);text-decoration:none;border-bottom:1px solid #d8c6a2}.allrepos a:hover{color:var(--red)}
 .vis .big-ic{width:40%;height:40%;opacity:.9}
 .vis .lbl{position:absolute;bottom:12px;left:14px;font-family:var(--hand);font-size:22px;color:rgba(255,255,255,.92)}
@@ -130,11 +130,11 @@ a.vis:hover{transform:translateY(-5px);box-shadow:-10px 22px 42px -12px rgba(48,
 .about p.bio{font-family:var(--mono);font-weight:700;font-size:15.5px;line-height:1.9;color:#2b2012;text-shadow:0 1px 2px rgba(255,250,235,.55)}
 .about p.bio .hl{color:var(--red)}
 .skillgrp{margin-top:26px}
-.skillgrp h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:9px}
+.skillgrp h4{font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:9px}
 .tl{border-left:2px solid #e2cfa9;padding-left:20px;display:flex;flex-direction:column;gap:22px}
 .tl .it{position:relative}
 .tl .it::before{content:"";position:absolute;left:-27px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--yellow);border:2px solid #fff}
-.tl .yr{font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:.06em}
+.tl .yr{font-family:var(--mono);font-weight:700;font-size:12.5px;color:var(--red);letter-spacing:.06em}
 .tl .ti{font-family:var(--disp);font-weight:800;font-size:20px;color:var(--ink);margin:2px 0;text-shadow:0 1px 2px rgba(255,250,235,.5)}
 .tl .ds{font-family:var(--mono);font-weight:700;font-size:12.5px;color:#463a22;line-height:1.65;text-shadow:0 1px 2px rgba(255,250,235,.5)}
 
@@ -142,7 +142,7 @@ a.vis:hover{transform:translateY(-5px);box-shadow:-10px 22px 42px -12px rgba(48,
 .contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#f3ead6}
 .contact .h{font-family:var(--hand);font-size:30px;color:#f0c69a;text-shadow:0 1px 12px rgba(0,0,0,.35)}
 .contact a.mail{font-family:var(--disp);font-weight:800;font-size:clamp(26px,5.5vw,64px);color:#fff;text-decoration:none;letter-spacing:-1px;border-bottom:3px solid var(--yellow);line-height:1.1;display:inline-block;margin-top:6px;text-shadow:0 2px 22px rgba(0,0,0,.4)}
-.contact .socials{margin-top:26px;display:flex;gap:26px;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.contact .socials{margin-top:26px;display:flex;gap:26px;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
 .contact .socials a{color:#cbb99a;text-decoration:none}.contact .socials a:hover{color:var(--yellow)}
 .foot{margin-top:60px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:#8a7f6a}
 
