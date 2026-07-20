@@ -1,0 +1,161 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>couldbefit — kaan alper</title>
+<meta name="description" content="couldbefit — an offline-first, dark-themed training journal built with Kotlin & Jetpack Compose. Meals, workouts and an in-app advisor.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@500..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#131814; --panel:#1c231e; --panel2:#232b25; --line:rgba(255,255,255,.09);
+  --grn:#59d08a; --grn2:#8fe3b0; --ink:#e9f0ea; --muted:#9aab9f; --faint:#71806f;
+  --disp:'Bricolage Grotesque',system-ui,sans-serif; --hand:'Caveat',cursive; --mono:'Space Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--mono);background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.6}
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(58% 42% at 82% -6%, rgba(89,208,138,.16), transparent 60%),radial-gradient(50% 40% at 6% 106%, rgba(89,208,138,.08), transparent 60%)}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:16px 32px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;background:linear-gradient(to bottom,rgba(19,24,20,.86),rgba(19,24,20,0))}
+nav .back{color:var(--ink);text-decoration:none;font-weight:700}nav .back:hover{color:var(--grn)}
+nav .lk{display:flex;gap:20px}nav .lk a{color:var(--muted);text-decoration:none}nav .lk a:hover{color:var(--grn)}
+
+.hero{padding:150px 0 30px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--grn);margin-bottom:18px}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(48px,8vw,96px);letter-spacing:-2.5px;line-height:.9;color:#fff}
+.hero .hand{font-family:var(--hand);font-size:32px;color:var(--grn2);display:block;margin-top:8px;transform:rotate(-2deg)}
+.lead{font-family:var(--mono);font-size:14px;color:var(--muted);margin:22px 0 0;line-height:1.85;max-width:52ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:13px 20px;border-radius:10px;transition:transform .18s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--grn);color:#0f1a12;font-weight:700}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);cursor:default}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.tags span{padding:5px 11px;border:1px solid var(--line);border-radius:999px}
+
+/* phone mockup */
+.phone{justify-self:center;width:270px;aspect-ratio:9/19;background:#0d110e;border-radius:34px;border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 50px 100px -40px rgba(0,0,0,.9),inset 0 0 0 6px #05070600;padding:14px 12px;position:relative}
+.phone::before{content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);width:70px;height:5px;border-radius:3px;background:#2a332c}
+.scr{margin-top:16px}
+.scr .h{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
+.scr .h b{font-family:var(--disp);font-weight:800;color:#fff;font-size:16px}
+.scr .h span{color:var(--faint);font-size:10px}
+.ring{width:150px;height:150px;border-radius:50%;margin:20px auto 8px;display:grid;place-items:center;
+  background:conic-gradient(var(--grn) 0 68%, #2a332c 68% 100%);position:relative}
+.ring::before{content:"";position:absolute;inset:13px;border-radius:50%;background:#0d110e}
+.ring .kc{position:relative;text-align:center}.ring .kc b{font-family:var(--disp);font-weight:800;color:#fff;font-size:26px;display:block;line-height:1}
+.ring .kc small{color:var(--muted);font-size:9px;letter-spacing:.1em}
+.mac{display:flex;gap:8px;margin:6px 4px 16px}
+.mac div{flex:1;text-align:center;font-size:9px;color:var(--muted)}
+.mac b{display:block;color:#fff;font-family:var(--disp);font-weight:700;font-size:13px}
+.mac i{display:block;height:4px;border-radius:2px;margin-top:5px;background:var(--grn);opacity:.8}
+.rows .r{display:flex;justify-content:space-between;align-items:center;background:#171d18;border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-bottom:7px;font-size:11px}
+.rows .r b{font-family:var(--disp);font-weight:700;color:#fff;font-size:12px}
+.rows .r span{color:var(--grn2);font-size:10px}
+.rows .r small{color:var(--faint);font-size:9px}
+
+.sec{padding:70px 0}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--grn);margin-bottom:14px}
+.sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(28px,4.5vw,44px);letter-spacing:-1.5px;color:#fff;margin-bottom:20px}
+.sec p.body{font-family:var(--mono);font-size:14px;color:var(--muted);max-width:62ch;line-height:1.9}
+.sec p.body b{color:var(--ink);font-weight:400;border-bottom:1px solid rgba(89,208,138,.4)}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}
+.fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.fcard svg{width:28px;height:28px;margin-bottom:12px}
+.fcard h3{font-family:var(--disp);font-weight:700;font-size:18px;color:#fff;margin-bottom:7px;letter-spacing:-.3px}
+.fcard p{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7}
+.tech{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tech span{font-family:var(--mono);font-size:12px;color:var(--muted);padding:8px 14px;border:1px solid var(--line);border-radius:999px}
+
+.foot{padding:80px 0 70px;text-align:center;border-top:1px solid var(--line);margin-top:50px}
+.foot .h{font-family:var(--hand);font-size:26px;color:var(--grn2)}
+.foot .note{font-family:var(--disp);font-weight:800;font-size:clamp(20px,3vw,30px);color:#fff;margin-top:4px}
+.foot .back2{display:block;margin-top:30px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.foot .back2:hover{color:var(--grn)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+@media (max-width:800px){.hero{grid-template-columns:1fr;text-align:center}.lead{margin-left:auto;margin-right:auto}.cta,.tags{justify-content:center}.feat{grid-template-columns:1fr}h1{font-size:clamp(44px,13vw,72px)}}
+</style>
+
+<div class="glow"></div><div class="grain"></div>
+<nav>
+  <a class="back" href="/">← kaan alper</a>
+  <div class="lk"><a href="mailto:kaanalperkaraaslan@gmail.com">get notified</a></div>
+</nav>
+
+<header class="hero wrap">
+  <div>
+    <div class="eyebrow">android · offline training journal</div>
+    <h1>couldbefit<span class="hand">your pocket gym, offline</span></h1>
+    <p class="lead">A dark, lightweight training journal for people who just want to log and move on. Plan meals, track workouts and follow an in-app advisor — built with Kotlin &amp; Jetpack Compose, fully offline: no account, no cloud, no tracking.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:kaanalperkaraaslan@gmail.com?subject=couldbefit">get notified →</a>
+      <span class="btn ghost">private · in development</span>
+    </div>
+    <div class="tags"><span>Kotlin</span><span>Jetpack Compose</span><span>Room</span><span>Material 3</span><span>100% offline</span></div>
+  </div>
+  <div class="phone reveal">
+    <div class="scr">
+      <div class="h"><b>couldbefit</b><span>· today</span></div>
+      <div class="ring"><div class="kc"><b>1,840</b><small>KCAL LEFT</small></div></div>
+      <div class="mac">
+        <div>PROTEIN<b>142g</b><i style="width:80%"></i></div>
+        <div>CARBS<b>190g</b><i style="width:60%"></i></div>
+        <div>FAT<b>54g</b><i style="width:45%"></i></div>
+      </div>
+      <div class="rows">
+        <div class="r"><div><b>Push day</b><br><small>chest · shoulders · triceps</small></div><span>6 sets ✓</span></div>
+        <div class="r"><div><b>Bench press</b><br><small>4 × 8 · 60kg</small></div><span>done</span></div>
+        <div class="r"><div><b>Overhead press</b><br><small>3 × 10 · 30kg</small></div><small>next</small></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap reveal">
+    <div class="kicker">what it is</div>
+    <h2>A gym log that respects your time — and your data.</h2>
+    <p class="body">Most fitness apps want an account, a subscription and your location. couldbefit wants none of that. Everything lives <b>on your device</b> in a local database, works with <b>no internet</b>, and stays out of your way: open it, log a set or a meal, close it. A single-purpose tool built the way I wanted one to feel — dark, fast and quiet.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">features</div><h2>Everything you log, nothing you don't.</h2></div>
+    <div class="feat">
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9l6 3"/><path d="M17 3l4 1-1 4"/></svg><h3>100% offline</h3><p>A local Room database — no account, no cloud sync, no analytics. Your training stays yours.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18M6 8h12l-2 4 2 4H6"/></svg><h3>Meals &amp; macros</h3><p>Log meals and watch protein, carbs and fat fill up against your daily target in a glance.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/></svg><h3>Workout logging</h3><p>Build routines, log sets, reps and weight, and let the app carry your progress forward.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 6H21l-5 4 2 6-6-4-6 4 2-6-5-4h6.5z"/></svg><h3>In-app advisor</h3><p>Guidance on targets and progression, built in — no forum, no guru, no upsell.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="3"/><path d="M11 6h2"/></svg><h3>Dark &amp; Compose</h3><p>A pure Jetpack Compose UI, dark by default, tuned to be light on the eyes and on the battery.</p></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#59d08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><h3>Private by design</h3><p>Nothing leaves the phone. No sign-up wall between you and your first logged set.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap reveal">
+    <div class="kicker">built with</div>
+    <div class="tech"><span>Kotlin</span><span>Jetpack Compose</span><span>Room</span><span>Coroutines / Flow</span><span>Material 3</span><span>MVVM</span></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <span class="h">still cooking —</span>
+    <div class="note">want an early build? ping me.</div>
+    <a class="back2" href="/">← back to all work</a>
+  </div>
+</footer>
+
+<script>
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>

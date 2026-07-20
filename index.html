@@ -1,0 +1,409 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kaan alper — software that sees, maps &amp; connects</title>
+<meta name="description" content="Kaan Alper — EEE & CS student building software close to the metal: computer vision, censorship-resistant networking and Linux tooling. AsenaPlug, couldbefit, shitnet & more.">
+<meta property="og:title" content="kaan alper — portfolio">
+<meta property="og:description" content="Software that sees, maps & connects.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@500..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#33261a; --soft:#6d583d; --faint:#9c855f;
+  --red:#e0503a; --yellow:#f2a835; --teal:#3f9683;
+  --disp:'Bricolage Grotesque',system-ui,sans-serif; --hand:'Caveat',cursive; --mono:'Space Mono',ui-monospace,monospace;
+  --navc:#33261a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--mono);color:var(--ink);background:#0e1230;overflow-x:hidden}
+
+/* ── EVRİLEN DÜNYA (sabit) ── */
+.world{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;isolation:isolate}
+.skyL{position:absolute;inset:-2px;will-change:opacity}
+.sky-morning{background:linear-gradient(#f1cd92,#f9ead0)}
+.sky-mid{background:linear-gradient(#a7cfe6 0%,#d4e6dd 60%,#eef2de 100%)}
+.sky-dusk{background:linear-gradient(#584a86 0%,#c66a63 52%,#f3ab63 100%)}
+.sky-night{background:linear-gradient(#0c1030 0%,#1d2450 55%,#33325e 100%)}
+.stars{position:absolute;inset:0;opacity:0}
+.star{position:absolute;background:#fff;border-radius:50%;animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.35}50%{opacity:1}}
+.sun{position:absolute;border-radius:50%;will-change:transform,left,top}
+.godray{position:absolute;inset:0;mix-blend-mode:screen;opacity:.5;
+  background:repeating-conic-gradient(from 188deg at var(--sunx,80%) var(--suny,22%),
+    rgba(255,241,206,0) 0deg, rgba(255,238,196,.5) 2.4deg, rgba(255,241,206,0) 7deg);
+  filter:blur(3px);
+  -webkit-mask:radial-gradient(60% 60% at var(--sunx,80%) var(--suny,22%), #000 8%, transparent 74%);
+          mask:radial-gradient(60% 60% at var(--sunx,80%) var(--suny,22%), #000 8%, transparent 74%)}
+.layer{position:absolute;left:-2%;right:-2%;bottom:0;width:104%;will-change:transform}
+.layer svg{width:100%;display:block}
+.nightveil{position:absolute;inset:0;background:#0c1236;opacity:0;mix-blend-mode:multiply}
+.paint{position:absolute;left:0;right:0;bottom:0;height:52%;opacity:.55;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.013' numOctaves='3' seed='8'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");background-size:360px}
+.vignette{position:absolute;inset:0;mix-blend-mode:multiply;
+  background:radial-gradient(130% 108% at 60% 36%, transparent 44%, rgba(40,26,8,.24) 100%)}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.09;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:16px 40px 24px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--navc);
+  background:linear-gradient(to bottom,rgba(248,236,208,.72),rgba(248,236,208,0))}
+.nav .b{font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.5px}
+.nav .lk{display:flex;gap:22px;align-items:center}
+.nav a{color:inherit;text-decoration:none;opacity:.8}.nav a:hover{opacity:1;color:var(--red)}
+.nav .pdot{width:7px;height:7px;border-radius:50%;background:#39b06a;display:inline-block;margin-right:5px;box-shadow:0 0 0 0 rgba(57,176,106,.5);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(57,176,106,.5)}70%{box-shadow:0 0 0 8px rgba(57,176,106,0)}100%{box-shadow:0 0 0 0 rgba(57,176,106,0)}}
+
+/* ── içerik ── */
+main{position:relative;z-index:10}
+section{position:relative;padding:0 40px}
+.wrap{max-width:1200px;margin:0 auto}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:60px}
+.hero .hi{font-family:var(--hand);font-size:36px;color:var(--red);transform:rotate(-3deg);display:inline-block}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(44px,8.4vw,108px);line-height:.86;letter-spacing:-2px;text-transform:uppercase;color:var(--ink);text-shadow:0 2px 0 rgba(255,250,235,.5),0 6px 18px rgba(90,60,20,.14)}
+.hero h1 .r{color:var(--red)}.hero h1 .y{color:var(--yellow)}
+.hero .sq{display:block;width:min(430px,52%);margin:8px auto 0;height:18px}
+.hero .sub{font-family:var(--mono);font-size:13px;color:var(--soft);max-width:52ch;margin:22px auto 0;line-height:1.7}
+.cue{margin-top:40px;font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:8px}
+.cue svg{animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+/* hero saçılan notlar */
+.pin{position:absolute;z-index:12;transition:transform .22s ease}
+.pin:hover{transform:scale(1.05) rotate(0deg)!important}
+a.pin,a.pin *{text-decoration:none;color:inherit}
+.sticker{font-family:var(--hand);font-weight:700;font-size:20px;padding:8px 15px;border-radius:8px;box-shadow:-4px 8px 15px -2px rgba(0,0,0,.24);line-height:1;background:var(--teal);color:#fff}
+.tape{position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-5deg);width:48px;height:17px;background:rgba(247,222,160,.6);border:1px solid rgba(205,175,115,.45)}
+.hnote{font-family:var(--hand);font-size:23px;color:var(--soft)}
+.doodle{position:absolute;z-index:11;pointer-events:none;filter:drop-shadow(-2px 3px 2px rgba(90,60,20,.18))}
+
+/* section başlık */
+.shead{display:flex;align-items:baseline;gap:16px;margin-bottom:8px}
+.shead .n{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.1em}
+.shead h2{font-family:var(--disp);font-weight:800;font-size:clamp(30px,5vw,56px);letter-spacing:-1.5px;color:var(--ink)}
+.slabel{color:var(--soft)}
+
+/* WORK */
+.work{padding:16vh 40px 12vh}
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin:10vh 0}
+.panel:nth-child(even){direction:rtl}.panel:nth-child(even) *{direction:ltr}
+.card{background:#fcf7ec;border:1px solid #ecdcbe;border-radius:14px;padding:26px 28px;
+  box-shadow:-8px 16px 34px -10px rgba(48,30,8,.4);transform:rotate(-1.2deg)}
+.panel:nth-child(even) .card{transform:rotate(1.2deg)}
+.card .k{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.card .k svg{width:34px;height:34px}
+.card .k .tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.card h3{font-family:var(--disp);font-weight:800;font-size:32px;letter-spacing:-1px;color:var(--ink);margin-bottom:10px}
+.card p{font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--soft);margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.chip{font-family:var(--mono);font-size:10.5px;padding:5px 11px;border-radius:999px;background:#f1e6d0;border:1px solid #e2cfa9;color:var(--soft)}
+.links{display:flex;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.links a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--yellow);padding-bottom:2px}
+.links a:hover{color:var(--red)}
+.links .muted{color:var(--faint);border-color:#d8c6a2}
+.vis{aspect-ratio:4/3;border-radius:14px;position:relative;overflow:hidden;box-shadow:-8px 16px 34px -12px rgba(48,30,8,.34);display:grid;place-items:center;text-decoration:none;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease}
+a.vis:hover{transform:translateY(-5px);box-shadow:-10px 22px 42px -12px rgba(48,30,8,.42)}
+.links a.muted{border-color:transparent;cursor:default}
+.more{margin-top:13vh}
+.more .mh{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:20px}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.mcard{background:#fcf7ec;border:1px solid #ecdcbe;border-radius:12px;padding:20px;box-shadow:-5px 11px 22px -8px rgba(48,30,8,.26);transition:transform .2s ease,box-shadow .2s ease;text-decoration:none;display:block}
+.mcard:hover{transform:translateY(-4px);box-shadow:-7px 15px 28px -8px rgba(48,30,8,.34)}
+.mcard .k{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.mcard .k svg{width:26px;height:26px}.mcard .k .tag{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.mcard h5{font-family:var(--disp);font-weight:800;font-size:20px;color:var(--ink);margin-bottom:7px;letter-spacing:-.3px}
+.mcard p{font-family:var(--mono);font-size:11px;line-height:1.65;color:var(--soft);margin-bottom:12px}
+.mcard .gh{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);border-bottom:2px solid var(--yellow);padding-bottom:2px}
+.mcard:hover .gh{color:var(--red)}
+.allrepos{margin-top:24px;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.allrepos a{color:var(--soft);text-decoration:none;border-bottom:1px solid #d8c6a2}.allrepos a:hover{color:var(--red)}
+.vis .big-ic{width:40%;height:40%;opacity:.9}
+.vis .lbl{position:absolute;bottom:12px;left:14px;font-family:var(--hand);font-size:22px;color:rgba(255,255,255,.92)}
+
+/* ABOUT */
+.about{padding:14vh 40px 12vh}
+.about .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;margin-top:30px}
+.about p.bio{font-family:var(--mono);font-size:14px;line-height:1.9;color:var(--ink)}
+.about p.bio .hl{color:var(--red)}
+.skillgrp{margin-top:26px}
+.skillgrp h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:9px}
+.tl{border-left:2px solid #e2cfa9;padding-left:20px;display:flex;flex-direction:column;gap:22px}
+.tl .it{position:relative}
+.tl .it::before{content:"";position:absolute;left:-27px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--yellow);border:2px solid #fff}
+.tl .yr{font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:.06em}
+.tl .ti{font-family:var(--disp);font-weight:800;font-size:19px;color:var(--ink);margin:2px 0}
+.tl .ds{font-family:var(--mono);font-size:11.5px;color:var(--soft);line-height:1.6}
+
+/* CONTACT (gece) */
+.contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#f3ead6}
+.contact .h{font-family:var(--hand);font-size:30px;color:#f0c69a;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.contact a.mail{font-family:var(--disp);font-weight:800;font-size:clamp(26px,5.5vw,64px);color:#fff;text-decoration:none;letter-spacing:-1px;border-bottom:3px solid var(--yellow);line-height:1.1;display:inline-block;margin-top:6px;text-shadow:0 2px 22px rgba(0,0,0,.4)}
+.contact .socials{margin-top:26px;display:flex;gap:26px;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.contact .socials a{color:#cbb99a;text-decoration:none}.contact .socials a:hover{color:var(--yellow)}
+.foot{margin-top:60px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:#8a7f6a}
+
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.star,.cue svg,.nav .pdot{animation:none}}
+@media (max-width:820px){
+  .panel,.about .grid,.mgrid{grid-template-columns:1fr;gap:24px}
+  .panel:nth-child(even){direction:ltr}
+  .pin,.doodle{display:none}
+  .nav{padding:14px 22px}.nav .lk{gap:14px}
+  section{padding:0 22px}.work,.about{padding:10vh 22px}
+  .hero h1{font-size:clamp(38px,12vw,72px)}
+}
+@media (max-width:520px){.nav .lk a{display:none}.nav .lk span:last-child{display:inline}}
+</style>
+
+<!-- ══ EVRİLEN DÜNYA ══ -->
+<div class="world" aria-hidden="true">
+  <div class="skyL sky-morning" id="sky0"></div>
+  <div class="skyL sky-mid" id="sky1" style="opacity:0"></div>
+  <div class="skyL sky-dusk" id="sky2" style="opacity:0"></div>
+  <div class="skyL sky-night" id="sky3" style="opacity:0"></div>
+  <div class="stars" id="stars"></div>
+  <div class="sun" id="sun"></div>
+  <div class="godray" id="godray"></div>
+
+  <!-- uzak dağlar -->
+  <div class="layer" id="mFar" style="filter:blur(2px)">
+    <svg viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice">
+      <path d="M0,300 L120,150 L210,250 L330,90 L470,250 L560,170 L700,280 L840,140 L980,260 L1120,120 L1260,250 L1360,180 L1440,270 V420 H0Z" fill="#b9c9b4" opacity=".7"/>
+    </svg>
+  </div>
+  <!-- orta tepeler -->
+  <div class="layer" id="mMid">
+    <svg viewBox="0 0 1440 360" preserveAspectRatio="xMidYMax slice">
+      <defs><linearGradient id="hm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9dba86"/><stop offset="1" stop-color="#7ea06d"/></linearGradient></defs>
+      <path d="M0,180 Q360,90 720,150 T1440,120 V360 H0Z" fill="url(#hm)"/>
+      <path d="M0,180 Q360,90 720,150 T1440,120" fill="none" stroke="#d9e6c2" stroke-width="3" opacity=".5"/>
+    </svg>
+  </div>
+  <!-- yakın tepeler + ağaçlar + ön plan -->
+  <div class="layer" id="mNear">
+    <svg viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="hn1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fbb95"/><stop offset="1" stop-color="#6c9d78"/></linearGradient>
+        <linearGradient id="hn2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5c9e72"/><stop offset="1" stop-color="#437c58"/></linearGradient>
+      </defs>
+      <path d="M0,206 Q380,142 760,198 Q1120,250 1440,190 V460 H0Z" fill="url(#hn1)"/>
+      <path d="M0,206 Q380,142 760,198 Q1120,250 1440,190" fill="none" stroke="#c7e2c8" stroke-width="3" opacity=".45"/>
+      <path d="M0,258 Q420,212 860,252 Q1180,282 1440,246 V460 H0Z" fill="url(#hn2)"/>
+      <g stroke-linecap="round" fill="none">
+        <path d="M120,214 q120,-30 250,-12" stroke="#aed3b0" stroke-width="5" opacity=".5"/>
+        <path d="M560,206 q150,28 320,4" stroke="#9dcaa1" stroke-width="5" opacity=".45"/>
+        <path d="M80,272 q190,-24 380,-4" stroke="#79b58a" stroke-width="6" opacity=".5"/>
+        <path d="M760,266 q160,20 320,2" stroke="#6aa87c" stroke-width="5" opacity=".45"/>
+      </g>
+      <g>
+        <rect x="184" y="196" width="8" height="22" fill="#6e4d2f"/><circle cx="188" cy="192" r="20" fill="#357355"/><circle cx="195" cy="186" r="13" fill="#4f9068"/>
+        <rect x="1241" y="182" width="9" height="26" fill="#6e4d2f"/><circle cx="1246" cy="178" r="24" fill="#357355"/><circle cx="1255" cy="170" r="15" fill="#4f9068"/>
+        <rect x="1080" y="236" width="7" height="18" fill="#6e4d2f"/><circle cx="1083" cy="232" r="15" fill="#2f6849"/><circle cx="1089" cy="226" r="9" fill="#48865f"/>
+      </g>
+    </svg>
+  </div>
+  <div class="nightveil" id="nightveil"></div>
+  <div class="paint"></div>
+  <div class="vignette"></div>
+</div>
+<div class="grain"></div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <span class="b">kaan alper.</span>
+  <span class="lk">
+    <a href="#work">work</a><a href="#about">about</a><a href="#contact">say hi</a>
+    <span><span class="pdot"></span>open to work</span>
+  </span>
+</nav>
+
+<main>
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="top">
+    <span class="hi">hey, i'm kaan — i build</span>
+    <h1>software that<br><span class="r">sees</span>, <span class="y">maps</span><br>&amp; connects.</h1>
+    <svg class="sq" viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M2,13 q22,-11 44,-4 t44,-2 t44,-3 t62,-1" fill="none" stroke="#e0503a" stroke-width="3.5" stroke-linecap="round"/></svg>
+    <p class="sub">EEE &amp; CS student · visual SLAM, censorship-resistant network tools &amp; Linux systems, built close to the metal.</p>
+    <div class="cue"><span>scroll</span><svg width="20" height="26" viewBox="0 0 20 26" fill="none" stroke="#6d583d" stroke-width="2"><path d="M10 2v20M4 16l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <div class="pin sticker" style="left:7%;top:24%;transform:rotate(-6deg)"><span class="tape"></span>open to work!</div>
+    <div class="pin hnote" style="right:8%;top:22%;transform:rotate(3deg);text-align:right">student @ Çankaya<br>'24 – '29</div>
+    <svg class="doodle" style="left:16%;top:52%;width:80px;height:64px" viewBox="0 0 80 64"><path d="M6,8 q38,10 60,46" fill="none" stroke="#f2a835" stroke-width="3" stroke-linecap="round"/><path d="M52,54 l13,0 M65,54 l-2,-13" fill="none" stroke="#f2a835" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg class="doodle" style="right:16%;top:56%;width:30px;height:30px" viewBox="0 0 40 40"><path d="M20,3 l3,13 13,3 -13,3 -3,13 -3,-13 -13,-3 13,-3z" fill="#e0503a"/></svg>
+  </section>
+
+  <!-- ══ WORK ══ -->
+  <section class="work" id="work">
+    <div class="wrap">
+      <div class="shead reveal"><span class="n">01</span><h2>selected <span class="slabel">work</span></h2></div>
+
+      <div class="panel reveal">
+        <div class="card">
+          <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="#b24a30" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.6v5.1c0 4.4-3 7.5-7 8.9-4-1.4-7-4.5-7-8.9V5.6z"/><path d="M9 12l2 2 4-4.4"/></svg><span class="tag">network · privacy</span></div>
+          <h3>AsenaPlug</h3>
+          <p>A censorship-resistant VPN over Cloudflare's MASQUE (HTTP/3), for Windows, Linux &amp; Android. SNI-based selective routing keeps DoH/DNS untouched, with real-time parallel speed tests and a one-tap tray.</p>
+          <div class="chips"><span class="chip">Go</span><span class="chip">MASQUE / HTTP-3</span><span class="chip">Kotlin</span><span class="chip">Android</span></div>
+          <div class="links"><a href="https://kaanalper.github.io/asenaplug/">view project →</a><a href="https://github.com/KaanAlper/AsenaPlug" target="_blank" rel="noopener">github ↗</a></div>
+        </div>
+        <a class="vis" href="https://kaanalper.github.io/asenaplug/" style="background:linear-gradient(150deg,#e0503a,#b23524)">
+          <svg class="big-ic" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.6v5.1c0 4.4-3 7.5-7 8.9-4-1.4-7-4.5-7-8.9V5.6z"/><path d="M9 12l2 2 4-4.4"/></svg>
+          <span class="lbl">tunnel everything, quietly</span>
+        </a>
+      </div>
+
+      <div class="panel reveal">
+        <div class="card">
+          <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="#5fa985" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/></svg><span class="tag">android · fitness</span></div>
+          <h3>couldbefit</h3>
+          <p>An offline-first, dark-themed training journal built with Kotlin &amp; Jetpack Compose. Plan meals, log workouts and follow an in-app advisor — lightweight and fully private: no account, no cloud, no tracking.</p>
+          <div class="chips"><span class="chip">Kotlin</span><span class="chip">Jetpack Compose</span><span class="chip">Room</span><span class="chip">Offline</span></div>
+          <div class="links"><a href="https://kaanalper.github.io/couldbefit/">view project →</a><a class="muted">private · in dev</a></div>
+        </div>
+        <a class="vis" href="https://kaanalper.github.io/couldbefit/" style="background:linear-gradient(150deg,#3c4a43,#232c28)">
+          <svg class="big-ic" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/></svg>
+          <span class="lbl">your pocket gym, offline</span>
+        </a>
+      </div>
+
+      <div class="panel reveal">
+        <div class="card">
+          <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="#e02e83" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span class="tag">web · social · maps</span></div>
+          <h3>shitnet</h3>
+          <p>A gamified, map-based social app for rating the world's toilets — regional leagues, a Hall of Shame, reviewer "lords" and live reviews. A tongue-in-cheek riff on Google Maps — shipped and live.</p>
+          <div class="chips"><span class="chip">TypeScript</span><span class="chip">Next.js</span><span class="chip">Maps</span><span class="chip">Realtime</span></div>
+          <div class="links"><a href="https://kaanalper.github.io/shitnet/">view project →</a><a href="https://shitnet.vercel.app" target="_blank" rel="noopener">live ↗</a></div>
+        </div>
+        <a class="vis" href="https://kaanalper.github.io/shitnet/" style="background:linear-gradient(150deg,#ff2e88,#7d1f8c)">
+          <svg class="big-ic" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.92)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          <span class="lbl">rate the world, one stall at a time</span>
+        </a>
+      </div>
+
+      <div class="more reveal">
+        <div class="mh">— more things i've built</div>
+        <div class="mgrid">
+          <a class="mcard" href="https://github.com/KaanAlper/Minecraft-Server-Opener" target="_blank" rel="noopener">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="#7a5636" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M13 16h4"/></svg><span class="tag">bash · linux</span></div>
+            <h5>Minecraft Server Opener</h5>
+            <p>An interactive bash tool that installs Java, checks dependencies and spins up Vanilla, Forge, Paper, Fabric or Sponge servers from a single menu.</p>
+            <span class="gh">github ↗</span>
+          </a>
+          <a class="mcard" href="https://github.com/KaanAlper" target="_blank" rel="noopener">
+            <div class="k"><svg viewBox="0 0 26 24" fill="none" stroke="#4a7a6a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="11" height="8.5" rx="2"/><circle cx="8" cy="10.2" r="2.2"/><path d="M14.5 15.5q4 1.2 6.4-3.2" stroke-dasharray="1 2.6"/><circle cx="21" cy="12" r="1" fill="#4a7a6a" stroke="none"/></svg><span class="tag">python · pytorch</span></div>
+            <h5>Visual SLAM</h5>
+            <p>Experiments in dense monocular visual SLAM — learned tracking, mapping and 3D reconstruction from a single moving camera, plus UAV image-stitching &amp; orthomosaics.</p>
+            <span class="gh">github ↗</span>
+          </a>
+          <a class="mcard" href="https://github.com/KaanAlper/HideYTShorts" target="_blank" rel="noopener">
+            <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="#a06a2e" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg><span class="tag">javascript · userscript</span></div>
+            <h5>Browser userscripts</h5>
+            <p>Small quality-of-life tweaks for the browser — hide YouTube Shorts, stop the YouTube UI popping up on keypress, and a few other everyday fixes.</p>
+            <span class="gh">github ↗</span>
+          </a>
+        </div>
+        <div class="allrepos"><a href="https://github.com/KaanAlper?tab=repositories" target="_blank" rel="noopener">browse all 30+ repos on github →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ABOUT ══ -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="shead reveal"><span class="n">02</span><h2>about <span class="slabel">&amp; skills</span></h2></div>
+      <div class="grid">
+        <div class="reveal">
+          <p class="bio">I'm Kaan — an <span class="hl">EEE &amp; CS</span> student in Ankara who likes building software that lives close to the hardware. I move between <span class="hl">computer vision</span>, <span class="hl">censorship-resistant networking</span>, and <span class="hl">Linux tooling</span> — the kind of work where you have to understand the whole stack, from the packet to the pixel.</p>
+          <div class="skillgrp"><h4>languages</h4><div class="chips"><span class="chip">Go</span><span class="chip">Python</span><span class="chip">Kotlin</span><span class="chip">C / C++</span><span class="chip">TypeScript</span></div></div>
+          <div class="skillgrp"><h4>domains</h4><div class="chips"><span class="chip">Computer Vision · SLAM</span><span class="chip">Anti-censorship · Networking</span><span class="chip">Android · Compose</span><span class="chip">Web · TypeScript</span><span class="chip">Linux · Systems</span><span class="chip">Robotics · UAV</span></div></div>
+        </div>
+        <div class="reveal">
+          <div class="tl">
+            <div class="it"><div class="yr">2024 — 2029</div><div class="ti">Çankaya University</div><div class="ds">B.Sc. Electrical–Electronics Engineering + Computer Engineering (double focus).</div></div>
+            <div class="it"><div class="yr">now</div><div class="ti">building in the open</div><div class="ds">30+ repos — vision, networking &amp; systems experiments, shipped and iterated.</div></div>
+            <div class="it"><div class="yr">open</div><div class="ti">internships &amp; collab</div><div class="ds">Looking for teams working on CV, networking or low-level systems.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT (gece) ══ -->
+  <section class="contact" id="contact">
+    <span class="h">let's build something together →</span>
+    <a class="mail" href="mailto:kaanalperkaraaslan@gmail.com">kaanalperkaraaslan<br>@gmail.com</a>
+    <div class="socials"><a href="https://github.com/KaanAlper" target="_blank" rel="noopener">github</a><a href="#">linkedin</a><a href="#">instagram</a></div>
+    <div class="foot">© 2026 kaan alper karaaslan · built close to the metal</div>
+  </section>
+</main>
+
+<script>
+(function(){
+  // ── saat ── (nav'da yok ama status için gerekmez) ──
+  // ── yıldızlar ──
+  var starBox=document.getElementById('stars');
+  for(var i=0;i<90;i++){var s=document.createElement('div');s.className='star';
+    var sz=Math.random()*2+0.6;s.style.width=s.style.height=sz+'px';
+    s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*62)+'%';
+    s.style.animationDelay=(Math.random()*4)+'s';starBox.appendChild(s);}
+
+  var sky=[0,1,2,3].map(function(i){return document.getElementById('sky'+i)});
+  var sun=document.getElementById('sun'), gr=document.getElementById('godray'),
+      nv=document.getElementById('nightveil'), starsEl=document.getElementById('stars'),
+      nav=document.querySelector('.nav'), root=document.documentElement,
+      mFar=document.getElementById('mFar'), mMid=document.getElementById('mMid'), mNear=document.getElementById('mNear');
+
+  function h2r(h){h=h.replace('#','');return[parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)];}
+  function mix(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+  function rgb(a){return'rgb('+Math.round(a[0])+','+Math.round(a[1])+','+Math.round(a[2])+')';}
+  function clamp(x){return x<0?0:x>1?1:x;}
+  function tri(p,c,w){return Math.max(0,1-Math.abs(p-c)/w);}
+  // sun keyframe'leri: [p, x%, y%, r(px), colorHex]
+  var SUN=[[0,80,22,86,'#f7bc50'],[0.5,74,15,82,'#ffd35f'],[0.86,70,23,92,'#f0894a'],[1,76,15,56,'#e9e6d2']];
+  function segArr(arr,p,idx){for(var i=0;i<arr.length-1;i++){if(p<=arr[i+1][0]){var t=clamp((p-arr[i][0])/(arr[i+1][0]-arr[i][0]||1));return arr[i][idx]+(arr[i+1][idx]-arr[i][idx])*t;}}return arr[arr.length-1][idx];}
+  function segCol(arr,p){for(var i=0;i<arr.length-1;i++){if(p<=arr[i+1][0]){var t=clamp((p-arr[i][0])/(arr[i+1][0]-arr[i][0]||1));return mix(h2r(arr[i][4]),h2r(arr[i+1][4]),t);}}return h2r(arr[arr.length-1][4]);}
+
+  var inkC=h2r('#33261a'), creamC=h2r('#f3ead6');
+
+  function frame(){
+    var vh=window.innerHeight, max=document.body.scrollHeight-vh;
+    var p=clamp(max>0?window.scrollY/max:0);
+    // gökyüzü cross-fade — sabah taban (hep 1), gece finalde
+    sky[0].style.opacity=1;
+    sky[1].style.opacity=tri(p,0.48,0.40);
+    sky[2].style.opacity=tri(p,0.92,0.12);
+    var night=clamp((p-0.90)/0.10);
+    sky[3].style.opacity=night;
+    // güneş / ay
+    var sx=segArr(SUN,p,1), sy=segArr(SUN,p,2), sr=segArr(SUN,p,3), sc=rgb(segCol(SUN,p));
+    sun.style.left=sx+'%';sun.style.top=sy+'%';sun.style.width=sun.style.height=(sr*2)+'px';
+    sun.style.transform='translate(-50%,-50%)';
+    sun.style.background='radial-gradient(circle at 38% 34%, #fff8e6, '+sc+' 62%, '+sc+')';
+    sun.style.boxShadow='0 0 '+(sr*1.5)+'px '+(sr*0.7)+'px '+sc.replace('rgb','rgba').replace(')',',0.5)');
+    root.style.setProperty('--sunx',sx+'%');root.style.setProperty('--suny',sy+'%');
+    gr.style.opacity=(0.5*(1-night)).toFixed(2);
+    // gece
+    nv.style.opacity=(night*0.72).toFixed(2);
+    starsEl.style.opacity=clamp((p-0.90)/0.08).toFixed(2);
+    // nav rengi + adaptif buzlu-cam
+    nav.style.setProperty('--navc',rgb(mix(inkC,creamC,night)));
+    var nc=mix([248,236,208],[12,16,40],night),ns='rgba('+Math.round(nc[0])+','+Math.round(nc[1])+','+Math.round(nc[2]);
+    nav.style.background='linear-gradient(to bottom,'+ns+',.74),'+ns+',0))';
+    // parallax
+    mFar.style.transform='translateY('+(p*26)+'px)';
+    mMid.style.transform='translateY('+(p*64)+'px)';
+    mNear.style.transform='translateY('+(p*120)+'px)';
+  }
+  var ticking=false;
+  function onScroll(){if(!ticking){requestAnimationFrame(function(){frame();ticking=false;});ticking=true;}}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',frame);frame();
+
+  // reveal
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.16});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+</script>

@@ -1,0 +1,141 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>shitnet — kaan alper</title>
+<meta name="description" content="shitnet — a gamified, map-based social app for rating the world's toilets. Leagues, a Hall of Shame, reviewer lords and live reviews. Shipped & live.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Caveat:wght@600..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eee0bf; --card:#fffaf0; --ink:#191203; --blk:#141007;
+  --pink:#ff2e88; --cyan:#1fc7d8; --yellow:#ffce2e; --muted:#6f6244;
+  --disp:'Bricolage Grotesque',system-ui,sans-serif; --hand:'Caveat',cursive; --mono:'Space Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--mono);background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.6}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.06;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 32px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;background:rgba(238,224,191,.9);border-bottom:2px solid var(--blk)}
+nav .back{color:var(--ink);text-decoration:none;font-weight:700}nav .back:hover{color:var(--pink)}
+nav .lk a{color:var(--ink);text-decoration:none;font-weight:700}nav .lk a:hover{color:var(--pink)}
+.mark{position:fixed;top:47px;left:0;right:0;z-index:39;background:var(--pink);color:#fff;border-bottom:2px solid var(--blk);overflow:hidden;white-space:nowrap}
+.mark div{display:inline-block;padding:5px 0;font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.14em;animation:scroll 22s linear infinite}
+.mark span{margin:0 22px}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.hero{padding:150px 0 40px;text-align:center}
+.eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--cyan);color:var(--blk);border:2px solid var(--blk);border-radius:6px;padding:6px 12px;box-shadow:3px 3px 0 var(--blk)}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(64px,14vw,168px);letter-spacing:-4px;line-height:.86;margin:22px 0 6px;color:var(--pink);
+  text-shadow:4px 4px 0 var(--blk)}
+.tag-tr{font-family:var(--disp);font-weight:800;font-size:clamp(20px,3.4vw,34px);color:var(--ink);letter-spacing:-1px}
+.tag-tr .p{color:var(--pink);font-style:italic}
+.tag-en{font-family:var(--hand);font-size:26px;color:var(--muted);margin-top:2px}
+.lead{font-family:var(--mono);font-size:14px;color:#4f4632;max-width:60ch;margin:24px auto 0;line-height:1.85}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.btn{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;
+  padding:14px 24px;border:2px solid var(--blk);border-radius:10px;box-shadow:5px 5px 0 var(--blk);transition:transform .12s ease,box-shadow .12s ease}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--blk)}
+.btn.pink{background:var(--pink);color:#fff}.btn.yel{background:var(--yellow);color:var(--blk)}
+
+.frame{margin:52px auto 0;max-width:960px;position:relative}
+.frame img{width:100%;display:block;border:3px solid var(--blk);border-radius:14px;box-shadow:10px 10px 0 var(--blk)}
+.frame .sticker{position:absolute;top:-22px;right:-14px;background:var(--yellow);color:var(--blk);font-family:var(--hand);font-weight:700;font-size:24px;
+  border:2px solid var(--blk);border-radius:8px;padding:6px 14px;transform:rotate(6deg);box-shadow:3px 3px 0 var(--blk)}
+
+.sec{padding:74px 0}
+.kicker{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blk);background:var(--yellow);border:2px solid var(--blk);padding:4px 10px;border-radius:5px;margin-bottom:16px}
+.sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(30px,5vw,52px);letter-spacing:-1.5px;color:var(--ink);margin-bottom:20px}
+.sec p.body{font-family:var(--mono);font-size:14.5px;color:#4f4632;max-width:62ch;line-height:1.9}
+.sec p.body b{color:var(--ink);font-weight:700;background:var(--yellow);padding:0 3px}
+
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:6px}
+.fcard{background:var(--card);border:2.5px solid var(--blk);border-radius:14px;padding:22px;box-shadow:6px 6px 0 var(--blk)}
+.fcard:nth-child(2n){transform:rotate(-1deg)}.fcard:nth-child(3n){transform:rotate(1deg)}
+.fcard .ic{width:38px;height:38px;border:2px solid var(--blk);border-radius:9px;display:grid;place-items:center;margin-bottom:14px}
+.fcard .ic svg{width:22px;height:22px}
+.fcard h3{font-family:var(--disp);font-weight:800;font-size:20px;color:var(--ink);margin-bottom:7px;letter-spacing:-.3px}
+.fcard p{font-family:var(--mono);font-size:12px;color:#5a4f38;line-height:1.7}
+.tech{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.tech span{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink);padding:8px 15px;border:2px solid var(--blk);border-radius:999px;background:var(--card);box-shadow:3px 3px 0 var(--blk)}
+
+.foot{padding:80px 0 70px;text-align:center;border-top:2px solid var(--blk);margin-top:50px}
+.foot .h{font-family:var(--hand);font-size:30px;color:var(--muted)}
+.foot a.big{font-family:var(--disp);font-weight:800;font-size:clamp(24px,4vw,44px);color:var(--pink);text-decoration:none;display:inline-block;margin-top:4px;text-shadow:3px 3px 0 var(--blk)}
+.foot .back2{display:block;margin-top:34px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.foot .back2:hover{color:var(--pink)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.mark div{animation:none}}
+@media (max-width:800px){.feat{grid-template-columns:1fr}h1{font-size:clamp(56px,20vw,90px)}.frame .sticker{right:6px}}
+</style>
+
+<div class="grain"></div>
+<nav>
+  <a class="back" href="/">← kaan alper</a>
+  <div class="lk"><a href="https://shitnet.vercel.app" target="_blank" rel="noopener">visit live ↗</a></div>
+</nav>
+<div class="mark"><div><span>★ RATE THE WORLD</span><span>★ ANKARA'S #1 TOILET ATLAS</span><span>★ LEAGUES · HALL OF SHAME · LORDS</span><span>★ SHIPPED &amp; LIVE</span><span>★ RATE THE WORLD</span><span>★ ANKARA'S #1 TOILET ATLAS</span><span>★ LEAGUES · HALL OF SHAME · LORDS</span><span>★ SHIPPED &amp; LIVE</span></div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">web · gamified social maps</span>
+    <h1>shitnet</h1>
+    <div class="tag-tr">Dünya boktan. <span class="p">Sen iyisini bul.</span></div>
+    <div class="tag-en">the world's rough — go find the good ones.</div>
+    <p class="lead">A gamified, map-based social app for rating the world's toilets. Drop a pin from wherever you are, climb the regional leagues, dodge the Hall of Shame, and become a reviewer "lord". A tongue-in-cheek riff on Google Maps — designed, built and shipped end-to-end.</p>
+    <div class="cta">
+      <a class="btn pink" href="https://shitnet.vercel.app" target="_blank" rel="noopener">open the app ↗</a>
+      <a class="btn yel" href="https://shitnet.vercel.app/harita" target="_blank" rel="noopener">see the map</a>
+    </div>
+  </div>
+  <div class="wrap frame reveal">
+    <img src="./hero.png" alt="shitnet — the live web app">
+    <span class="sticker">it's live!</span>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap reveal">
+    <span class="kicker">what it is</span>
+    <h2>A whole social network, for the one thing nobody reviews.</h2>
+    <p class="body">shitnet takes a dumb premise completely seriously: a real, playable product with <b>maps</b>, <b>live reviews</b>, <b>regional leagues</b>, badges and a leaderboard of "lords". It's the full loop — discover a place, rate it, climb the ranks — wrapped in a loud, neo-brutalist identity. Frontend, maps, realtime and the whole game economy, built by one person and put online.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="reveal"><span class="kicker">the game</span><h2>Rate. Climb. Repeat.</h2></div>
+    <div class="feat">
+      <div class="fcard reveal"><div class="ic" style="background:var(--pink)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg></div><h3>Toilet atlas</h3><p>An interactive map of rated spots — drop a pin from wherever you are and put a place on the grid.</p></div>
+      <div class="fcard reveal"><div class="ic" style="background:var(--cyan)"><svg viewBox="0 0 24 24" fill="none" stroke="#141007" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg></div><h3>Regional leagues</h3><p>Every district gets its own top-tier table. Rate enough and your neighbourhood crowns a leader.</p></div>
+      <div class="fcard reveal"><div class="ic" style="background:var(--yellow)"><svg viewBox="0 0 24 24" fill="none" stroke="#141007" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h.01M15 9h.01M9 15a3 3 0 0 1 6 0"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Hall of Shame</h3><p>The bottom five, immortalised. The worst offenders get their own wall of infamy 💀.</p></div>
+      <div class="fcard reveal"><div class="ic" style="background:var(--pink)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M8 21v-2a4 4 0 0 1 8 0v2M18 8l2 2 3-3"/></svg></div><h3>Reviewer lords</h3><p>A global leaderboard with badges — first rating, paparazzi, and more — for the most active reviewers.</p></div>
+      <div class="fcard reveal"><div class="ic" style="background:var(--cyan)"><svg viewBox="0 0 24 24" fill="none" stroke="#141007" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4L3 21l1.1-3.3A8.4 8.4 0 1 1 21 11.5z"/></svg></div><h3>Live reviews</h3><p>A running feed of fresh verdicts, "live from the stall" — the timeline never stops scrolling.</p></div>
+      <div class="fcard reveal"><div class="ic" style="background:var(--yellow)"><svg viewBox="0 0 24 24" fill="none" stroke="#141007" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div><h3>Add a place</h3><p>Found a hidden gem? Put it on the map and hand it to the world. The atlas grows with the crowd.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap reveal">
+    <span class="kicker">built with</span>
+    <div class="tech"><span>TypeScript</span><span>Next.js</span><span>Interactive maps</span><span>Realtime feed</span><span>Auth</span><span>Vercel</span></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <span class="h">go on, rate something —</span><br>
+    <a class="big" href="https://shitnet.vercel.app" target="_blank" rel="noopener">shitnet.vercel.app ↗</a>
+    <a class="back2" href="/">← back to all work</a>
+  </div>
+</footer>
+
+<script>
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>

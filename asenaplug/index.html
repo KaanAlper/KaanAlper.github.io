@@ -1,0 +1,136 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AsenaPlug — kaan alper</title>
+<meta name="description" content="AsenaPlug — DPI/DNS censorship-bypass over Cloudflare MASQUE. A one-tap system-tray app for Windows, Linux & Android.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat:wght@500..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#100e0a; --panel:#1a1712; --panel2:#211d16; --line:rgba(255,255,255,.09);
+  --gold:#f2b035; --gold2:#f7cf7e; --green:#4bd07f; --ink:#efe6d3; --muted:#a89a80; --faint:#7d735f;
+  --disp:'Bricolage Grotesque',system-ui,sans-serif; --hand:'Caveat',cursive; --mono:'Space Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--mono);background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.6}
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(60% 44% at 78% -4%, rgba(242,176,53,.20), transparent 60%),radial-gradient(50% 40% at 8% 108%, rgba(242,176,53,.10), transparent 60%)}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:16px 32px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+  background:linear-gradient(to bottom,rgba(16,14,10,.86),rgba(16,14,10,0))}
+nav .back{color:var(--ink);text-decoration:none;font-weight:700}nav .back:hover{color:var(--gold)}
+nav .lk{display:flex;gap:20px}nav .lk a{color:var(--muted);text-decoration:none}nav .lk a:hover{color:var(--gold)}
+
+.hero{padding:150px 0 40px;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(52px,10vw,120px);letter-spacing:-3px;line-height:.9;color:#fff}
+.hero .hand{font-family:var(--hand);font-size:34px;color:var(--gold2);display:block;margin-top:10px;transform:rotate(-2deg)}
+.lead{font-family:var(--mono);font-size:15px;color:var(--muted);max-width:60ch;margin:26px auto 0;line-height:1.8}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:13px 22px;border-radius:10px;transition:transform .18s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--gold);color:#1a1409;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.platforms{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.05em}
+.platforms span{padding:6px 12px;border:1px solid var(--line);border-radius:999px}
+
+.showcase{margin:56px 0 0}
+.showcase img{width:100%;border-radius:18px;border:1px solid var(--line);box-shadow:0 40px 90px -40px rgba(0,0,0,.9)}
+
+.sec{padding:80px 0}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(28px,4.5vw,46px);letter-spacing:-1.5px;color:#fff;margin-bottom:22px}
+.sec p.body{font-family:var(--mono);font-size:14.5px;color:var(--muted);max-width:64ch;line-height:1.9}
+.sec p.body b{color:var(--ink);font-weight:400;border-bottom:1px solid rgba(242,176,53,.4)}
+
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+.fcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
+.fcard svg{width:30px;height:30px;margin-bottom:14px}
+.fcard h3{font-family:var(--disp);font-weight:700;font-size:19px;color:#fff;margin-bottom:8px;letter-spacing:-.3px}
+.fcard p{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.7}
+.fcard .m{font-family:var(--mono);font-size:11px;color:var(--gold2);margin-top:10px;display:block}
+
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+.gallery img{width:100%;border-radius:14px;border:1px solid var(--line)}
+.gallery img:first-child{grid-column:1/-1}
+
+.foot{padding:90px 0 70px;text-align:center;border-top:1px solid var(--line);margin-top:60px}
+.foot .h{font-family:var(--hand);font-size:28px;color:var(--gold2)}
+.foot a.big{font-family:var(--disp);font-weight:800;font-size:clamp(24px,4vw,40px);color:#fff;text-decoration:none;display:inline-block;margin-top:6px;border-bottom:3px solid var(--gold)}
+.foot .back2{display:block;margin-top:34px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.foot .back2:hover{color:var(--gold)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+@media (max-width:800px){.feat{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.nav .lk{gap:12px}h1{font-size:clamp(44px,14vw,72px)}}
+</style>
+
+<div class="glow"></div><div class="grain"></div>
+<nav>
+  <a class="back" href="/">← kaan alper</a>
+  <div class="lk"><a href="https://github.com/KaanAlper/AsenaPlug" target="_blank" rel="noopener">github</a><a href="https://github.com/KaanAlper/AsenaPlug/releases" target="_blank" rel="noopener">download</a></div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">masque · censorship bypass</div>
+    <h1>AsenaPlug<span class="hand">tunnel everything, quietly</span></h1>
+    <p class="lead">A censorship-resistant tunnel that disguises itself as ordinary HTTPS to slip past DPI &amp; DNS blocking — where WireGuard gets throttled, this survives. One tap from the system tray, on every device you own.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/KaanAlper/AsenaPlug/releases" target="_blank" rel="noopener">download ↓</a>
+      <a class="btn ghost" href="https://github.com/KaanAlper/AsenaPlug" target="_blank" rel="noopener">source on github ↗</a>
+    </div>
+    <div class="platforms"><span>🖥 Windows 10/11</span><span>🐧 Linux · Arch &amp; Debian</span><span>📱 Android</span><span>5 languages</span><span>MIT</span></div>
+  </div>
+  <div class="wrap showcase reveal"><img src="./shot1.png" alt="AsenaPlug — one tap, fully protected"></div>
+</header>
+
+<section class="sec">
+  <div class="wrap reveal">
+    <div class="kicker">what it is</div>
+    <h2>A real tunnel, not just an SNI trick.</h2>
+    <p class="body">AsenaPlug carries your traffic over <b>Cloudflare's MASQUE</b> (HTTP/2 or HTTP/3), so on the wire it looks like ordinary HTTPS and survives Turkish ISP DPI and throttling. It opens <b>IP-blocked sites</b> too and hides the traffic — a clean, un-poisoned DNS answer travels <b>through</b> the tunnel. Your physical internet stays the default: only the domains on your blacklist are tunneled, unless you flip to full-tunnel.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">highlights</div><h2>Two dials. Zero friction.</h2></div>
+    <div class="feat">
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#f2b035" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="2.4" fill="#100e0a"/><circle cx="16" cy="17" r="2.4" fill="#100e0a"/></svg><h3>Transport &amp; routing</h3><p>Pick HTTP/2 (default, DPI-resistant) or HTTP/3 (QUIC, lower latency); route only your blacklist or everything.</p><span class="m">chosen from the tray</span></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#f2b035" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 4v4h-4"/></svg><h3>Live blacklist</h3><p>Add or edit tunneled domains and they apply instantly — a hot DNS reload with no reconnect, no dropped session.</p><span class="m">changes apply live</span></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#f2b035" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg><h3>5-language UI</h3><p>English, Deutsch, Español, Français, Türkçe — picks your OS language on first run, switchable any time.</p><span class="m">EN · DE · ES · FR · TR</span></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#f2b035" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><h3>One-tap tray</h3><p>A clickable tray indicator — green when connected, gray when off, live status while it switches. No dashboards.</p><span class="m">PySide6, theme-free</span></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#f2b035" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V9m5 9V5m5 13v-6m5 6V8"/></svg><h3>Real speed tests</h3><p>Parallel-stream download &amp; upload tests, live, so you can see tunnel vs. direct throughput at a glance.</p><span class="m">tunnel vs direct</span></div>
+      <div class="fcard reveal"><svg viewBox="0 0 24 24" fill="none" stroke="#f2b035" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 7h6"/></svg><h3>Everywhere</h3><p>Windows self-updates &amp; starts on boot; Linux does per-app routing &amp; Hyprland autostart; Android is native.</p><span class="m">Win · Linux · Android</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="reveal"><div class="kicker">inside the app</div><h2>Built to disappear into your day.</h2></div>
+    <div class="gallery reveal">
+      <img src="./shot2.png" alt="AsenaPlug screenshot">
+      <img src="./shot3.png" alt="AsenaPlug screenshot">
+      <img src="./shot4.png" alt="AsenaPlug screenshot">
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <span class="h">want it running on your machine?</span><br>
+    <a class="big" href="https://github.com/KaanAlper/AsenaPlug" target="_blank" rel="noopener">github.com/KaanAlper/AsenaPlug</a>
+    <a class="back2" href="/">← back to all work</a>
+  </div>
+</footer>
+
+<script>
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>
