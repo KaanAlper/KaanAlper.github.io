@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CouldBeFit — Hesap ve Veri Silme</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px 80px;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background: #fafafa;
+    }
+    h1 { font-size: 2rem; margin-top: 0; color: #1f7a4d; }
+    h2 { margin-top: 2.2rem; color: #1a1a1a; border-bottom: 2px solid #27c26a; padding-bottom: 6px; }
+    a { color: #1f7a4d; }
+    .meta { color: #666; font-size: 0.9rem; }
+    .steps { background: #eefaf2; border-left: 4px solid #27c26a; padding: 16px 20px; border-radius: 8px; margin: 20px 0; }
+    .mail-btn {
+      display: inline-block;
+      background: #27c26a;
+      color: #fff;
+      padding: 14px 28px;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      margin: 12px 0;
+    }
+    .lang-switch { margin-bottom: 30px; }
+    .lang-switch a { margin-right: 16px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #ddd; vertical-align: top; }
+    th { background: #f4f4f4; }
+    code { background: #eee; padding: 2px 6px; border-radius: 4px; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #0a0a0a; color: #eee; }
+      h2 { color: #fff; }
+      .steps { background: #08160f; }
+      th { background: #1a1a1a; }
+      td, th { border-bottom-color: #333; }
+      code { background: #1a1a1a; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="lang-switch">
+  <a href="#tr"><strong>Türkçe</strong></a>
+  <a href="#en">English</a>
+  <a href="./">← Gizlilik Politikası</a>
+</div>
+
+<!-- ============ TÜRKÇE ============ -->
+<section id="tr">
+
+<h1>CouldBeFit — Hesap ve Veri Silme</h1>
+<p class="meta">Uygulama: <strong>CouldBeFit</strong> · Geliştirici: <strong>KaanAlper's Lab</strong> · Son güncelleme: 29 Temmuz 2026</p>
+
+<p>
+Bu sayfa, CouldBeFit kullanıcılarının hesaplarının ve verilerinin silinmesini nasıl talep
+edebileceğini açıklar.
+</p>
+
+<h2>Nasıl talep edilir</h2>
+
+<div class="steps">
+  <p><strong>1.</strong> Uygulamayı aç ve <strong>Ayarlar</strong> bölümüne gir.</p>
+  <p><strong>2.</strong> <strong>Hesap kodunu</strong> not al (Ayarlar &gt; Bulut yedeği bölümünde görünür).
+     Hesabını sunucuda tanımlayan şey bu koddur; e-posta veya kullanıcı adı kullanmıyoruz.</p>
+  <p><strong>3.</strong> Aşağıdaki adrese, konusu <code>CouldBeFit veri silme</code> olan bir e-posta gönder
+     ve hesap kodunu yaz.</p>
+  <p style="text-align:center;">
+    <a class="mail-btn" href="mailto:kaanalperkaraaslan@gmail.com?subject=CouldBeFit%20veri%20silme&amp;body=Hesap%20kodum%3A%20">
+      kaanalperkaraaslan@gmail.com adresine yaz
+    </a>
+  </p>
+  <p><strong>4.</strong> Talebin <strong>en geç 30 gün içinde</strong> işlenir ve tamamlandığında sana
+     aynı e-posta ile dönülür.</p>
+</div>
+
+<p>
+<strong>Yalnızca cihazındaki verileri silmek istiyorsan</strong> uygulamayı kaldırman yeterlidir:
+antrenman geçmişin, öğün kayıtların, profil bilgilerin ve indirilmiş yapay zekâ modeli dahil tüm
+yerel veri cihazından silinir. Bunun için bize başvurman gerekmez.
+</p>
+
+<h2>Silinen veriler</h2>
+
+<p>Aşağıdakiler sunucularımızdan (Supabase) <strong>kalıcı olarak</strong> silinir:</p>
+
+<table>
+<tr><th>Veri Türü</th><th>Silme</th></tr>
+<tr><td>Kullanıcı dizini kaydı (kullanıcı kimliği, açık anahtar, görünen ad, son etkinlik zamanı)</td><td>Tamamen silinir</td></tr>
+<tr><td>Profil fotoğrafın</td><td>Depolamadan tamamen silinir</td></tr>
+<tr><td>Bulut yedeklerin (antrenman, öğün ve profil verilerinin şifreli kopyaları)</td><td>Tüm sürümleriyle birlikte tamamen silinir</td></tr>
+<tr><td>Liderlik tablosu kaydın (güç puanı, siklet, cinsiyet, görünen ad)</td><td>Tamamen silinir</td></tr>
+<tr><td>Eşleşme ve arkadaşlık kayıtların</td><td>Tamamen silinir</td></tr>
+<tr><td>Sohbet mesajların ve sohbette gönderdiğin görseller</td><td>Tamamen silinir</td></tr>
+<tr><td>Okundu bilgileri</td><td>Tamamen silinir</td></tr>
+<tr><td>Hoca başvurun (yaptıysan)</td><td>Tamamen silinir</td></tr>
+<tr><td>Cihazındaki tüm yerel veriler</td><td>Uygulamayı kaldırdığında silinir</td></tr>
+</table>
+
+<p class="meta">
+Not: sohbet mesajların sunucuda <strong>uçtan uca şifreli</strong> tutulur ve bulut yedeklerin
+AES-256-GCM ile şifrelenir; şifre çözme anahtarı yalnızca senin hesap kodundan türetilir ve
+sunucuda saklanmaz. Yani bu veriler silinmeden önce de tarafımızdan okunamaz.
+</p>
+
+<h2>Silinmeyen veya bir süre saklanan veriler</h2>
+
+<table>
+<tr><th>Veri</th><th>Saklama süresi</th><th>Sebep</th></tr>
+<tr><td>Kilitlenme (çökme) raporları — Firebase Crashlytics</td><td>En fazla 90 gün</td><td>Hata ayıklama. Adın, e-postan veya hesap kodunla ilişkilendirilmez; yalnız cihaz kurulumuna ait rastgele bir kimlik taşır, bu yüzden tek tek geri bulunup silinemez.</td></tr>
+<tr><td>Sunucu erişim kayıtları (IP adresi, zaman damgası) — Supabase</td><td>En fazla 30 gün</td><td>Güvenlik ve kötüye kullanım tespiti</td></tr>
+<tr><td>Veritabanı yedek kopyaları — Supabase</td><td>En fazla 30 gün</td><td>Felaket kurtarma. Bu süre dolduğunda kayıtların yedeklerden de düşer.</td></tr>
+<tr><td>Karşı tarafın cihazındaki sohbet kopyaları</td><td>Süresiz</td><td>Yazıştığın kişinin telefonundaki kopyalar o kişiye aittir; sunucudan silinseler de o cihazda kalabilir.</td></tr>
+</table>
+
+<h2>Sorular</h2>
+<p>
+Silme talebin veya gizlilik konusundaki her soru için:
+<a href="mailto:kaanalperkaraaslan@gmail.com">kaanalperkaraaslan@gmail.com</a>
+</p>
+
+</section>
+
+<hr style="margin:60px 0;" />
+
+<!-- ============ ENGLISH ============ -->
+<section id="en">
+
+<h1>CouldBeFit — Account &amp; Data Deletion</h1>
+<p class="meta">App: <strong>CouldBeFit</strong> · Developer: <strong>KaanAlper's Lab</strong> · Last updated: 29 July 2026</p>
+
+<p>
+This page explains how CouldBeFit users can request deletion of their account and data.
+</p>
+
+<h2>How to request deletion</h2>
+
+<div class="steps">
+  <p><strong>1.</strong> Open the app and go to <strong>Settings</strong>.</p>
+  <p><strong>2.</strong> Note your <strong>account code</strong> (shown under Settings &gt; Cloud backup).
+     This code is what identifies your account on our servers — we do not use email addresses or usernames.</p>
+  <p><strong>3.</strong> Send an email to the address below with the subject
+     <code>CouldBeFit data deletion</code>, including your account code.</p>
+  <p style="text-align:center;">
+    <a class="mail-btn" href="mailto:kaanalperkaraaslan@gmail.com?subject=CouldBeFit%20data%20deletion&amp;body=My%20account%20code%3A%20">
+      Email kaanalperkaraaslan@gmail.com
+    </a>
+  </p>
+  <p><strong>4.</strong> Your request is processed <strong>within 30 days at the latest</strong>, and we
+     reply by email once it is complete.</p>
+</div>
+
+<p>
+<strong>If you only want to delete the data on your device</strong>, simply uninstall the app: all local
+data — workout history, meal logs, profile details and any downloaded AI model — is removed from your
+device. You do not need to contact us for this.
+</p>
+
+<h2>Data that is deleted</h2>
+
+<p>The following is <strong>permanently deleted</strong> from our servers (Supabase):</p>
+
+<table>
+<tr><th>Data type</th><th>Deletion</th></tr>
+<tr><td>Directory record (user ID, public key, display name, last activity time)</td><td>Fully deleted</td></tr>
+<tr><td>Your profile photo</td><td>Fully deleted from storage</td></tr>
+<tr><td>Your cloud backups (encrypted copies of workout, meal and profile data)</td><td>Fully deleted, all versions</td></tr>
+<tr><td>Your leaderboard entry (strength score, weight class, sex, display name)</td><td>Fully deleted</td></tr>
+<tr><td>Your match and friendship records</td><td>Fully deleted</td></tr>
+<tr><td>Your chat messages and images sent in chat</td><td>Fully deleted</td></tr>
+<tr><td>Read receipts</td><td>Fully deleted</td></tr>
+<tr><td>Your coach application (if you made one)</td><td>Fully deleted</td></tr>
+<tr><td>All local data on your device</td><td>Deleted when you uninstall the app</td></tr>
+</table>
+
+<p class="meta">
+Note: chat messages are stored <strong>end-to-end encrypted</strong> on the server and cloud backups are
+encrypted with AES-256-GCM; the decryption key is derived solely from your account code and is never
+stored on the server. In other words, this data is unreadable to us even before deletion.
+</p>
+
+<h2>Data that is retained for a period</h2>
+
+<table>
+<tr><th>Data</th><th>Retention</th><th>Reason</th></tr>
+<tr><td>Crash reports — Firebase Crashlytics</td><td>Up to 90 days</td><td>Debugging. Not linked to your name, email or account code; it carries only a random per-installation identifier, so individual reports cannot be traced back and removed.</td></tr>
+<tr><td>Server access logs (IP address, timestamp) — Supabase</td><td>Up to 30 days</td><td>Security and abuse detection</td></tr>
+<tr><td>Database backup snapshots — Supabase</td><td>Up to 30 days</td><td>Disaster recovery. Your records also disappear from these snapshots once the window passes.</td></tr>
+<tr><td>Chat copies on the other person's device</td><td>Indefinite</td><td>Copies on the phone of someone you chatted with belong to them; they may remain on that device even after server-side deletion.</td></tr>
+</table>
+
+<h2>Questions</h2>
+<p>
+For deletion requests or any privacy question:
+<a href="mailto:kaanalperkaraaslan@gmail.com">kaanalperkaraaslan@gmail.com</a>
+</p>
+
+</section>
+
+</body>
+</html>
