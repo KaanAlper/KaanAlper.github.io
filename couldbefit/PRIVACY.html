@@ -17,13 +17,14 @@
     table { border-collapse: collapse; width: 100%; margin: 12px 0; display: block; overflow-x: auto; }
     th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #ddd; vertical-align: top; }
     th { background: #f4f4f4; }
+    hr { border: none; border-top: 1px solid #ddd; margin: 30px 0; }
     .nav { margin-bottom: 30px; }
     .nav a { margin-right: 16px; }
     @media (prefers-color-scheme: dark) {
       body { background: #0a0a0a; color: #eee; }
       h2, h3 { color: #fff; }
       th { background: #1a1a1a; }
-      td, th { border-bottom-color: #333; }
+      td, th, hr { border-color: #333; }
       code { background: #1a1a1a; }
     }
 </style>
@@ -31,19 +32,45 @@
 <body>
 <div class="nav"><a href="./"><strong>Gizlilik Politikası</strong></a><a href="./account-deletion.html">Veri Silme →</a></div>
 <h1>Gizlilik Politikası — CouldBeFit</h1>
-<p><strong>Son güncelleme: 28 Temmuz 2026</strong></p>
-<p>CouldBeFit ("uygulama"), tamamen çevrimdışı çalışan, sunucusuz bir vücut geliştirme/beslenme ajandası uygulamasıdır. Bu belge, uygulamanın hangi verileri nasıl işlediğini açıklar.</p>
-<h2>1. Veri toplama — genel ilke</h2>
-<p>CouldBeFit <strong>hiçbir kullanıcı verisini</strong> geliştiriciye, bir sunucuya veya üçüncü bir tarafa <strong>göndermez</strong>. Uygulamada:</p>
+<p><strong>Son güncelleme: 29 Temmuz 2026</strong></p>
+<p>CouldBeFit ("uygulama"), bir vücut geliştirme ve beslenme ajandasıdır. Bu belge, uygulamanın hangi verileri nasıl işlediğini açıklar.</p>
+<p><strong>Temel ilke — cihaz öncelikli:</strong> antrenman geçmişin, öğün kayıtların, programın ve profil bilgilerin öncelikle <strong>senin cihazında</strong>, yerel bir veritabanında (Room/SQLite) tutulur. Uygulamanın çekirdek işlevleri internet olmadan çalışır.</p>
+<p>Bunun yanında <strong>açıkça kullandığın bazı özellikler sunucu gerektirir</strong>: mesajlaşma, hoca eşleşmesi, liderlik tablosu ve bulut yedeği. Bu belge hangi verinin ne zaman cihazdan çıktığını tek tek açıklar.</p>
+<p>Uygulamada <strong>reklam SDK'sı yoktur, analitik/izleme (Google Analytics, Firebase Analytics vb.) yoktur, reklam kimliği okunmaz.</strong> Hiçbir veri satılmaz veya pazarlama amacıyla üçüncü taraflarla paylaşılmaz.</p>
+<hr />
+<h2>1. Hesabın nasıl oluşur</h2>
 <ul>
-<li>Analitik/izleme (analytics) yok</li>
-<li>Reklam SDK'sı yok</li>
-<li>Çökme raporlama (crash reporting) servisi yok</li>
-<li>Kullanıcı hesabı, giriş (login), Google/Apple/Facebook girişi yok</li>
-<li>Sunucu/backend yok</li>
+<li><strong>E-posta, telefon numarası veya şifre istemiyoruz.</strong> Kayıt formu ve giriş ekranı yoktur.</li>
+<li>Uygulama ilk açılışta cihazda bir <strong>EC P-256 anahtar çifti</strong> üretir; kullanıcı kimliğin (kısa ID) bu anahtardan matematiksel olarak türetilir.</li>
+<li>Ayrıca sana 20 karakterlik bir <strong>hesap kodu</strong> verilir. Bu kod <strong>sunucuda saklanmaz</strong>, yalnızca sende bulunur. İki işe yarar: bulut yedeğini şifreleyen anahtarın türetilmesi (PBKDF2-HMAC-SHA256) ve verilerini yeni bir cihaza taşıyabilmen.</li>
+<li><strong>Kodu kaybedersen bulut yedeklerine erişim kurtarılamaz</strong> — anahtarın kopyası bizde yoktur.</li>
+<li>Google, Apple, Facebook vb. üçüncü taraf giriş yöntemleri kullanılmaz.</li>
 </ul>
-<p>Tüm veriler <strong>yalnızca cihazında</strong>, yerel bir veritabanında (Room/SQLite) saklanır: boy/kilo/yaş/hedef bilgilerin, öğün ve kalori kayıtların, antrenman programın ve geçmişin, özel eklediğin yiyecekler.</p>
-<h2>1a. Sağlık ve fitness verisi (Health Connect)</h2>
+<h2>2. Cihazında kalan veriler</h2>
+<p>Aşağıdakiler yalnızca cihazında tutulur ve sen bulut yedeğini açmadıkça cihazdan çıkmaz:</p>
+<ul>
+<li>Boy, kilo, yaş, cinsiyet, hedef ve kilo geçmişin</li>
+<li>Öğün ve kalori kayıtların, eklediğin özel yiyecekler</li>
+<li>Antrenman programın ve antrenman geçmişin</li>
+<li>Ayarların, temaların ve indirdiysen yapay zekâ modeli</li>
+</ul>
+<p>Uygulamayı kaldırdığında bunların tamamı cihazından silinir.</p>
+<h2>3. Sunucuya giden veriler</h2>
+<p>Sunucu altyapısı olarak <strong>Supabase</strong> (PostgreSQL + dosya depolama) kullanılır.</p>
+<h3>3.1. Kullanıcı dizini</h3>
+<p>Başka kullanıcıların seni kimliğinle bulabilmesi için şunlar saklanır: <strong>kısa kullanıcı kimliğin, açık anahtarın (public key), görünen adın, varsa profil fotoğrafın ve son etkinlik zamanın.</strong> Görünen adı sen belirlersin, boş bırakabilirsin.</p>
+<p>Aynı cihazdan çok sayıda sahte hesap açılmasını tespit etmek için ayrıca <strong>cihaza ait geri döndürülemez bir özet (hash)</strong> saklanır; bu özetten cihaz kimliği geri elde edilemez.</p>
+<h3>3.2. Mesajlaşma</h3>
+<p>Mesaj gövdelerin sunucuda <strong>uçtan uca şifreli</strong> saklanır. Şifre çözme anahtarı senin ve karşı tarafın cihazlarındaki özel anahtarlardan türetilir; <strong>sunucuda bulunmaz ve mesajların içeriği tarafımızdan okunamaz.</strong> Sohbette gönderilen fotoğraflar da şifreli saklanır.</p>
+<p>Sunucunun görebildiği şey <strong>üstveridir</strong>: hangi konuşmada, hangi zamanda, kaç mesaj olduğu.</p>
+<h3>3.3. Liderlik tablosu</h3>
+<p>Liderlik tablosuna katılırsan <strong>güç puanın, siklet grubun, cinsiyetin ve görünen adın</strong> herkese açık listelenir — bu bölüm tanımı gereği geneldir. Her satır cihazının özel anahtarıyla <strong>imzalanır</strong>; başkası senin adına satır yazamaz.</p>
+<h3>3.4. Hoca eşleşmesi ve arkadaşlık</h3>
+<p>Gönderdiğin ve aldığın eşleşme istekleri (kimden kime, tür, durum) saklanır ve <strong>çift taraflı imzalanır</strong>. Hoca başvurusu yaparsan başvurun saklanır.</p>
+<h3>3.5. Bulut yedeği (isteğe bağlı, varsayılan KAPALI)</h3>
+<p>Ayarlardan bulut yedeğini açarsan verilerin buluta yedeklenir. Yedek <strong>AES-256-GCM ile şifrelenir</strong> ve şifreleme anahtarı <strong>yalnızca senin hesap kodundan türetilir</strong> — anahtar sunucuya hiçbir zaman gönderilmez. Sunucuda duran şey, bizim de okuyamadığımız bir şifreli metindir.</p>
+<p>Yedeğin içeriği: profil ve kilo geçmişin, öğün kayıtların, programın, <strong>antrenman geçmişin</strong> (Health Connect'ten içe aktarılmış yürüyüşler dahil — bkz. madde 4) ve sohbet geçmişin.</p>
+<h2>4. Sağlık ve fitness verisi (Health Connect)</h2>
 <p>Uygulama, <strong>isteğe bağlı</strong> olarak açabileceğin "Sağlık senkronu" özelliğiyle Android'in <strong>Health Connect</strong> deposundan sağlık verisi okuyabilir. Bu bölüm, Google Play "Health apps" politikasının istediği açıklamadır.</p>
 <p><strong>Hangi veriler okunur (yalnızca bunlar):</strong></p>
 <table>
@@ -57,85 +84,122 @@
 <tbody>
 <tr>
 <td><code>READ_STEPS</code></td>
-<td><strong>Adım sayısı</strong></td>
-<td>Yürüyüşü antrenman günlüğüne "Yürüyüş" seti olarak yazmak; üst kademe veri yoksa süre/mesafeyi buradan tahmin etmek</td>
+<td>Adım sayısı</td>
+<td>Günlük yürüyüşü antrenman olarak yazmak</td>
 </tr>
 <tr>
 <td><code>READ_EXERCISE</code></td>
-<td><strong>Yürüyüş ve doğa yürüyüşü</strong> türündeki antrenman kayıtlarının <strong>başlangıç/bitiş zamanı</strong></td>
-<td>Yürüyüşün süresini TAHMİN etmek yerine gerçek kayıttan okumak (isteğe bağlı; verilmezse süre günlük adım toplamından tahmin edilir). Yalnız yürüyüş/doğa yürüyüşü türü okunur; koşu, bisiklet, yüzme vb. <strong>okunmaz</strong></td>
+<td>Yürüyüş/doğa yürüyüşü seanslarının başlangıç-bitiş zamanı</td>
+<td>Süreyi tahmin etmek yerine ölçmek. Diğer spor türleri ve rota okunmaz</td>
 </tr>
 <tr>
 <td><code>READ_DISTANCE</code></td>
-<td><strong>Yürüme mesafesi</strong></td>
-<td>Tahmin yerine gerçek mesafeyi yazmak (isteğe bağlı; verilmezse adımdan tahmin edilir)</td>
+<td>Yürünen mesafe</td>
+<td>Mesafe ve hız hesabı; verilmezse adımdan tahmin edilir</td>
 </tr>
 <tr>
 <td><code>READ_SPEED</code></td>
-<td><strong>Ortalama hız</strong></td>
-<td>Mesafe okunamadığında yürüyüşün hızını uydurmak yerine ölçülen ortalamayı kullanmak (isteğe bağlı)</td>
+<td>Ortalama hız</td>
+<td>Yalnız mesafe okunamadığında kullanılır</td>
 </tr>
 <tr>
 <td><code>READ_ACTIVE_CALORIES_BURNED</code></td>
-<td><strong>Aktif yakılan kalori</strong> (bazal metabolizma hariç)</td>
-<td>Tahmin yerine ölçülen kaloriyi yazmak (isteğe bağlı; verilmezse ACSM formülüyle tahmin edilir)</td>
+<td>Aktif yakılan kalori (bazal metabolizma hariç)</td>
+<td>Günlük kalori bütçesi; verilmezse formülle tahmin edilir</td>
 </tr>
 <tr>
 <td><code>READ_HEALTH_DATA_IN_BACKGROUND</code></td>
-<td>(veri türü değil)</td>
-<td>Günlük otomatik içe aktarmanın uygulama kapalıyken de çalışabilmesi (isteğe bağlı; verilmezse senkron uygulamayı açtığında yapılır)</td>
+<td>Yukarıdakilerin arka planda okunması</td>
+<td>Uygulama kapalıyken de güncel kalmak; verilmezse senkron uygulamayı açtığında yapılır</td>
 </tr>
 </tbody>
 </table>
-<p>Okuma penceresi <strong>son 7 gündür</strong>. Daha eski veriye erişim izni (<code>READ_HEALTH_DATA_HISTORY</code>) <strong>istenmez</strong>.</p>
-<p><strong>Ne YAPILMAZ:</strong></p>
-<ul>
-<li>Uygulama Health Connect'e <strong>hiçbir şey yazmaz</strong> (<code>WRITE_*</code> izinleri hiç istenmez).</li>
-<li>Kalp atışı, uyku, tansiyon, kan şekeri, âdet döngüsü, konum/rota ve <strong>başka hiçbir sağlık verisi okunmaz</strong>. Antrenman kayıtlarından yalnızca <strong>yürüyüş/doğa yürüyüşü</strong> türünün başlangıç-bitiş zamanı okunur; diğer spor türlerine ve egzersiz rotasına (<code>READ_EXERCISE_ROUTE</code>) erişilmez.</li>
-<li>Okunan sağlık verisi <strong>cihazından hiç çıkmaz</strong>: hiçbir sunucuya, geliştiriciye veya üçüncü tarafa gönderilmez.</li>
-<li>Sağlık verisi <strong>reklam, pazarlama, analitik, profilleme veya yapay zeka eğitimi için kullanılmaz</strong>; hiçbir şekilde satılmaz veya paylaşılmaz.</li>
-<li>Bulut yedeği (Ayarlar &gt; "Online save") açık olsa bile: yedeğe giren şey senin antrenman günlüğündür (yürüyüş setleri dâhil, çünkü onlar artık senin girdiğin herhangi bir set gibidir); Health Connect'ten okunan <strong>ham sağlık kayıtları yedeğe girmez</strong>. Bulut yedeği ayrıca uçtan uca şifrelidir — anahtar yalnızca sende olan hesap kodundan türetilir.</li>
-</ul>
-<p><strong>Kontrol ve silme:</strong></p>
+<p><strong>Nasıl kullanılır:</strong></p>
 <ul>
 <li>Özellik <strong>varsayılan olarak kapalıdır</strong>; yalnız Ayarlar &gt; "Sağlık senkronu" anahtarını sen açarsan çalışır.</li>
-<li>İzinleri istediğin an Health Connect uygulamasından (Android Ayarlar &gt; Sağlık Connect &gt; Uygulama izinleri) geri alabilirsin.</li>
+<li>Okunan veriler <strong>ayrı bir arşiv olarak saklanmaz</strong>: son 7 günün özeti, senin elle girebileceğin türden bir "Walking" antrenman setine dönüştürülür ve bundan sonra sıradan bir antrenman kaydı gibi yaşar.</li>
+<li><strong>Yazma iznimiz yoktur:</strong> Health Connect'teki asıl kayıtların bizim tarafımızdan hiçbir zaman değiştirilmez veya silinmez.</li>
+<li>Sağlık verisi <strong>reklam, pazarlama veya profilleme amacıyla kullanılmaz</strong> ve üçüncü taraflara satılmaz/paylaşılmaz.</li>
+</ul>
+<p><strong>Cihazdan çıkar mı:</strong> Health Connect'ten okunan kayıtlar doğrudan hiçbir sunucuya gönderilmez. Ancak bunlardan üretilen <strong>yürüyüş antrenman setleri antrenman geçmişinin parçası olduğu için, bulut yedeğini açtıysan şifreli yedeğe dahil edilir</strong> (bkz. madde 3.5). Bulut yedeği kapalıyken bu veri cihazından hiç çıkmaz.</p>
+<p><strong>Kontrol ve silme:</strong></p>
+<ul>
+<li>İzinleri istediğin an Health Connect uygulamasından (Android Ayarlar &gt; Health Connect &gt; Uygulama izinleri) geri alabilirsin.</li>
 <li>Anahtarı kapattığında okuma durur ve arka plan görevi iptal edilir.</li>
-<li>Daha önce içe aktarılmış yürüyüş setleri normal antrenman kaydın gibi davranır: tek tek silebilir ya da uygulamayı kaldırarak tüm yerel veriyle birlikte silebilirsin.</li>
-<li><strong>Saklama süresi:</strong> okunan veriler için ayrı bir arşiv tutulmaz; yalnızca son 7 günün özeti günlük yürüyüş seti olarak yazılır ve senin antrenman geçmişinin bir parçası hâline gelir.</li>
+<li>İçe aktarılmış yürüyüş setlerini tek tek silebilir ya da uygulamayı kaldırarak tüm yerel veriyle birlikte silebilirsin.</li>
 </ul>
-<h2>2. Ağ (internet) erişimi — ne zaman, ne için</h2>
-<p>Uygulama varsayılan olarak <strong>hiçbir ağ isteği yapmaz</strong>. İstisnalar:</p>
+<h2>5. Bildirimler</h2>
+<ul>
+<li><strong>Yerel hatırlatmalar</strong> (antrenman, beslenme, motivasyon) tamamen cihazında üretilir; hiçbir veri dışarı gönderilmez.</li>
+<li><strong>Yönetici duyuruları</strong> için Firebase Cloud Messaging (FCM) kullanılır. Cihazın tek bir genel duyuru konusuna abone olur; <strong>kişisel veri gönderilmez</strong> ve duyurular herkese aynı içerikle gider, kişiselleştirilmez.</li>
+</ul>
+<h2>6. Kilitlenme (çökme) raporları</h2>
+<p>Uygulama çöktüğünde sorunu bulabilmek için <strong>Firebase Crashlytics</strong> kullanılır.</p>
+<ul>
+<li>Toplananlar: hata yığın izi, cihaz modeli, Android sürümü, uygulama sürümü ve <strong>cihaz kurulumuna ait rastgele bir kimlik</strong>.</li>
+<li><strong>Adın, e-postan, hesap kodun, mesajların, öğün ve antrenman verilerin gönderilmez.</strong></li>
+<li>Google bu raporları en fazla <strong>90 gün</strong> saklar.</li>
+<li>Yalnızca mağazadan kurulan yayın sürümünde toplanır; geliştirme sürümlerinde kapalıdır.</li>
+</ul>
+<h2>7. Ağ erişimi — başka ne zaman</h2>
 <ol>
-<li><strong>Yedekleme dışa/içe aktarma:</strong> Ayarlar'daki "Yedek al" özelliği, verilerini bir JSON dosyası olarak <strong>cihazının seçtiğin bir konumuna</strong> kaydeder (Android'in dosya seçici sistemi ile). Bu dosya hiçbir sunucuya gönderilmez — tamamen senin kontrolündedir.</li>
-<li><strong>Opsiyonel "Yerel AI" özelliği:</strong> Kullanıcı isterse, Ayarlar'dan bir yapay zeka modeli dosyasını (~1.1GB, GGUF formatı) <a href="https://huggingface.co">Hugging Face</a> üzerinden bir kez indirebilir. Bu indirme:</li>
-<li>Herkese açık, kimlik doğrulama gerektirmeyen bir dosya indirmedir (kullanıcı verisi göndermez)</li>
-<li>Yalnızca kullanıcı açıkça "İndir" dediğinde başlar</li>
-<li>İndirme sonrası model <strong>tamamen cihazda</strong> çalışır; sohbet mesajların hiçbir sunucuya gönderilmez</li>
-<li>İstenildiği zaman silinebilir (Ayarlar &gt; Yerel AI &gt; Sil)</li>
-<li><strong>Barkod tarama (Öğünler &gt; "Barkod tara"):</strong> Kullanıcı bir ürün barkodu okuttuğunda, o ürünün besin değerlerini almak için <a href="https://world.openfoodfacts.org">Open Food Facts</a> veri tabanına bir sorgu gönderilir. Bu sorguda:</li>
-<li>Gönderilen <strong>tek veri barkod rakamıdır</strong> (ör. <code>5449000000996</code>). Kullanıcı kimliği, cihaz kimliği, konum, öğün geçmişi veya başka hiçbir kişisel bilgi gönderilmez; hesap/oturum/çerez yoktur.</li>
-<li><strong>Kamera görüntüsü hiçbir zaman gönderilmez ve kaydedilmez.</strong> Barkod çözümlemesi tamamen cihazda (Google ML Kit, çevrimdışı model) yapılır; kameradan gelen kareler çözüldükten hemen sonra bellekten atılır, diske yazılmaz.</li>
-<li>İstek yalnızca kullanıcı barkod taradığında (ya da barkodu elle girdiğinde) yapılır.</li>
+<li><strong>Barkod tarama:</strong> Bir ürün barkodu okuttuğunda besin değerlerini almak için <a href="https://world.openfoodfacts.org">Open Food Facts</a> veri tabanına sorgu gönderilir. Gönderilen <strong>tek veri barkod rakamıdır</strong> (ör. <code>5449000000996</code>); kimlik, konum veya öğün geçmişi gönderilmez, hesap/oturum/çerez yoktur. <strong>Kamera görüntüsü hiçbir zaman gönderilmez ve kaydedilmez</strong> — barkod çözümü tamamen cihazda (Google ML Kit, çevrimdışı model) yapılır ve kareler çözüldükten hemen sonra bellekten atılır. Open Food Facts verisi <strong>ODbL</strong> lisanslıdır; atıf ürünün gösterildiği ekranda belirtilir.</li>
+<li><strong>Yerel yapay zekâ (isteğe bağlı):</strong> İstersen bir yapay zekâ modeli <a href="https://huggingface.co">Hugging Face</a> üzerinden bir kez indirilir. Bu, kimlik doğrulama gerektirmeyen düz bir dosya indirmedir; kullanıcı verisi göndermez. Model indikten sonra <strong>tamamen cihazda</strong> çalışır, sohbetlerin hiçbir sunucuya gitmez ve istediğin zaman silinebilir.</li>
+<li><strong>Zorunlu güncelleme kontrolü:</strong> Açılışta, kurulu sürümün desteklenen en düşük sürümün altında olup olmadığı sorulur. Bu istekte kişisel veri gönderilmez.</li>
 </ol>
-<p>Bu özellikler için <code>INTERNET</code> ve <code>ACCESS_NETWORK_STATE</code> izinleri istenir — başka hiçbir amaçla kullanılmazlar.</p>
-<h2>3. Üçüncü taraf servisler</h2>
+<h2>8. Üçüncü taraf servisler</h2>
+<table>
+<thead>
+<tr>
+<th>Servis</th>
+<th>Ne için</th>
+<th>Ne gönderilir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Supabase</strong></td>
+<td>Mesajlaşma, kullanıcı dizini, liderlik, bulut yedeği</td>
+<td>Madde 3'teki veriler</td>
+</tr>
+<tr>
+<td><strong>Google Firebase (Cloud Messaging)</strong></td>
+<td>Duyuru bildirimleri</td>
+<td>Kişisel veri gönderilmez</td>
+</tr>
+<tr>
+<td><strong>Google Firebase (Crashlytics)</strong></td>
+<td>Çökme raporları</td>
+<td>Madde 6'daki veriler</td>
+</tr>
+<tr>
+<td><strong>Open Food Facts</strong></td>
+<td>Barkod → besin değeri</td>
+<td>Yalnız barkod rakamı</td>
+</tr>
+<tr>
+<td><strong>Hugging Face</strong></td>
+<td>Yapay zekâ modeli indirme</td>
+<td>Kullanıcı verisi gönderilmez</td>
+</tr>
+<tr>
+<td><strong>Health Connect</strong> (Android sistem bileşeni)</td>
+<td>Sağlık verisi okuma</td>
+<td>Ağ servisi değildir; iletişim tamamen cihaz içidir (IPC)</td>
+</tr>
+</tbody>
+</table>
+<p>Tüm ağ trafiği <strong>HTTPS</strong> üzerinden şifrelenir; uygulama açık metin (şifresiz) bağlantı kurmaz.</p>
+<h2>9. Veri saklama ve silme</h2>
 <ul>
-<li><strong>Hugging Face (huggingface.co):</strong> Sadece opsiyonel yapay zeka modelinin indirilmesi için iletişim kurulur (bkz. madde 2). Kullanıcı adına veya davranışına dair hiçbir bilgi gönderilmez — düz bir dosya indirme isteğidir.</li>
-<li><strong>Health Connect (Android sistem bileşeni / <code>com.google.android.apps.healthdata</code>):</strong> Yalnızca "Sağlık senkronu" açıkken, <strong>cihaz içinde</strong> okuma yapılır (bkz. madde 1a). Bu bir ağ servisi değildir; Health Connect verinin cihazdaki deposudur ve iletişim tamamen cihaz içi (IPC) gerçekleşir. Bu okuma sırasında <strong>hiçbir ağ isteği yapılmaz</strong>.</li>
-<li><strong>Open Food Facts (openfoodfacts.org):</strong> Sadece barkod tarandığında ürün bilgisini almak için iletişim kurulur (bkz. madde 2). Gönderilen tek şey barkod rakamıdır. Open Food Facts açık bir veri tabanıdır ve verisi <strong>ODbL</strong> lisansı altındadır; uygulama, lisansın gerektirdiği atfı ürünün gösterildiği ekranda görünür biçimde belirtir.</li>
-<li>Başka hiçbir üçüncü taraf servis, SDK veya kütüphane kullanıcı verisine erişmez. (Barkod çözümü için kullanılan Google ML Kit kütüphanesi <strong>çevrimdışı</strong> çalışır — model uygulamanın içinde gömülüdür, ağa çıkmaz.)</li>
+<li>Cihazındaki veriler, sen silene veya uygulamayı kaldırana kadar saklanır.</li>
+<li>Sunucudaki verilerinin silinmesini talep edebilirsin. Nasıl yapılacağı, neyin silindiği ve neyin ne kadar saklandığı ayrı bir sayfada anlatılmıştır: <strong><a href="./account-deletion.html">Veri silme</a></strong></li>
+<li>Talepler en geç <strong>30 gün</strong> içinde işlenir.</li>
+<li>Çökme raporları kimliğine bağlanamadığı için tek tek geri bulunup silinemez; en fazla 90 gün sonra kendiliğinden düşer.</li>
 </ul>
-<h2>4. Veri saklama ve silme</h2>
-<ul>
-<li>Tüm veriler cihazında kaldığı sürece saklanır.</li>
-<li>Uygulamayı kaldırdığında (uninstall) tüm yerel veriler (veritabanı + indirilen yapay zeka modeli) cihazından silinir.</li>
-<li>Yedek dosyaların (JSON) sildiğin/sakladığın konum tamamen senin kontrolündedir.</li>
-<li><strong>Sağlık verisi:</strong> ayrı bir kopya/arşiv tutulmaz. Health Connect'ten okunan günlük özetler, senin elle girebileceğin bir yürüyüş seti hâline gelir ve bundan sonra sıradan bir antrenman kaydı gibi yaşar — tek tek silinebilir. Health Connect'teki asıl kayıtlar bizim tarafımızdan hiçbir zaman değiştirilmez veya silinmez (yazma iznimiz yoktur).</li>
-</ul>
-<h2>5. Çocukların gizliliği</h2>
-<p>Uygulama belirli bir yaş grubuna özel tasarlanmamıştır ve çocuklardan bilerek veri toplamaz (zaten hiçbir veri hiçbir yere gönderilmediği için toplanacak bir şey yoktur).</p>
-<h2>6. İzinler</h2>
+<h2>10. Çocukların gizliliği</h2>
+<p>Uygulama 13 yaşın altındaki çocuklara yönelik değildir ve bu yaş grubundan bilerek veri toplamaz.</p>
+<h2>11. İzinler</h2>
 <table>
 <thead>
 <tr>
@@ -146,46 +210,34 @@
 <tbody>
 <tr>
 <td><code>INTERNET</code></td>
-<td>Opsiyonel yapay zeka modeli indirmesi ve barkod sorgusu için</td>
+<td>Madde 3, 5, 6 ve 7'deki özellikler</td>
 </tr>
 <tr>
 <td><code>ACCESS_NETWORK_STATE</code></td>
-<td>İndirme durumunu kontrol etmek için</td>
+<td>Bağlantı durumunu kontrol etmek (yedek/senkron ne zaman denensin)</td>
 </tr>
 <tr>
 <td><code>CAMERA</code></td>
-<td><strong>Yalnızca barkod tarama için.</strong> Kamera görüntüsü cihazdan çıkmaz, kaydedilmez; sadece barkod rakamı okunur. İzin isteğe bağlıdır — reddedilirse barkod elle girilebilir, uygulamanın geri kalanı etkilenmez.</td>
+<td>Barkod tarama, profil fotoğrafı ve sohbette fotoğraf gönderme. <strong>Barkodda görüntü cihazdan çıkmaz ve kaydedilmez</strong>, yalnız rakam okunur. İzin isteğe bağlıdır; reddedilirse barkod elle girilebilir.</td>
 </tr>
 <tr>
-<td><code>health.READ_STEPS</code></td>
-<td><strong>Yalnızca "Sağlık senkronu" için</strong> (bkz. madde 1a). Adım sayısı okunur; cihazdan çıkmaz.</td>
+<td><code>POST_NOTIFICATIONS</code></td>
+<td>Hatırlatma ve duyuru bildirimleri</td>
 </tr>
 <tr>
-<td><code>health.READ_EXERCISE</code></td>
-<td>Aynı özellik için, isteğe bağlı: yürüyüş/doğa yürüyüşü kayıtlarının başlangıç-bitiş zamanı — süreyi tahmin etmek yerine ölçmek için. Diğer spor türleri ve rota okunmaz.</td>
+<td><code>FOREGROUND_SERVICE</code>, <code>FOREGROUND_SERVICE_DATA_SYNC</code></td>
+<td>Yapay zekâ modeli indirilirken indirmenin kesilmemesi</td>
 </tr>
 <tr>
-<td><code>health.READ_DISTANCE</code></td>
-<td>Aynı özellik için, isteğe bağlı: yürüme mesafesi. Verilmezse adımdan tahmin edilir.</td>
-</tr>
-<tr>
-<td><code>health.READ_SPEED</code></td>
-<td>Aynı özellik için, isteğe bağlı: ortalama hız. Yalnız mesafe okunamadığında kullanılır.</td>
-</tr>
-<tr>
-<td><code>health.READ_ACTIVE_CALORIES_BURNED</code></td>
-<td>Aynı özellik için, isteğe bağlı: aktif yakılan kalori (bazal metabolizma hariç). Verilmezse formülle tahmin edilir.</td>
-</tr>
-<tr>
-<td><code>health.READ_HEALTH_DATA_IN_BACKGROUND</code></td>
-<td>Aynı özellik için, isteğe bağlı: otomatik senkronun uygulama kapalıyken de çalışabilmesi. Verilmezse senkron uygulamayı açtığında yapılır.</td>
+<td><code>health.*</code> (madde 4'teki altı izin)</td>
+<td><strong>Yalnızca "Sağlık senkronu" için</strong></td>
 </tr>
 </tbody>
 </table>
-<p>Konum, mikrofon, kişiler, telefon durumu gibi hiçbir başka izin istenmez. Kamera izni yalnızca kullanıcı "Barkod tara" (veya "Fotoğraftan kalori" akışında "Fotoğraf çek") dediğinde, gerekçesiyle birlikte sorulur; uygulama açılışında istenmez. Sağlık izinleri yalnızca kullanıcı Ayarlar'daki "Sağlık senkronu" anahtarını açtığında, Health Connect'in kendi izin ekranı üzerinden istenir; uygulama açılışında istenmez ve reddedilirse özellik sessizce kapalı kalır.</p>
-<h2>7. Değişiklikler</h2>
+<p>Konum, mikrofon, kişiler ve telefon durumu gibi hiçbir başka izin istenmez. Kamera izni yalnızca kullanıcı ilgili işlemi başlattığında gerekçesiyle sorulur; uygulama açılışında istenmez. Sağlık izinleri yalnızca "Sağlık senkronu" açıldığında, Health Connect'in kendi izin ekranından istenir; reddedilirse özellik sessizce kapalı kalır.</p>
+<h2>12. Değişiklikler</h2>
 <p>Bu politika değişirse, güncellenmiş sürüm bu sayfada yayınlanır ("Son güncelleme" tarihi güncellenir).</p>
-<h2>8. İletişim</h2>
+<h2>13. İletişim</h2>
 <p>Sorularınız için: <strong>kaanalperkaraaslan@gmail.com</strong></p>
 </body>
 </html>
