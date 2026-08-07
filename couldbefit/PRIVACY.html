@@ -12,6 +12,7 @@
     h1 { font-size: 2rem; margin-top: 0; color: #1f7a4d; }
     h2 { margin-top: 2.2rem; color: #1a1a1a; border-bottom: 2px solid #27c26a; padding-bottom: 6px; }
     h3 { margin-top: 1.6rem; }
+    h4 { margin-top: 1.3rem; color: #1f7a4d; }
     a { color: #1f7a4d; }
     code { background: #eee; padding: 2px 6px; border-radius: 4px; }
     table { border-collapse: collapse; width: 100%; margin: 12px 0; display: block; overflow-x: auto; }
@@ -23,6 +24,7 @@
     @media (prefers-color-scheme: dark) {
       body { background: #0a0a0a; color: #eee; }
       h2, h3 { color: #fff; }
+      h4 { color: #27c26a; }
       th { background: #1a1a1a; }
       td, th, hr { border-color: #333; }
       code { background: #1a1a1a; }
@@ -30,12 +32,12 @@
 </style>
 </head>
 <body>
-<div class="nav"><a href="./"><strong>Gizlilik Politikası</strong></a><a href="./account-deletion.html">Veri Silme →</a></div>
-<h1>Gizlilik Politikası — CouldBeFit</h1>
-<p><strong>Son güncelleme: 29 Temmuz 2026</strong></p>
+<div class="nav"><a href="./"><strong>Gizlilik Politikası</strong></a><a href="./account-deletion.html">Veri Silme &rarr;</a></div>
+<h1>Gizlilik Politikası &mdash; CouldBeFit</h1>
+<p><strong>Son güncelleme: 8 Ağustos 2026</strong></p>
 <p>CouldBeFit ("uygulama"), bir vücut geliştirme ve beslenme ajandasıdır. Bu belge, uygulamanın hangi verileri nasıl işlediğini açıklar.</p>
 <p><strong>Temel ilke — cihaz öncelikli:</strong> antrenman geçmişin, öğün kayıtların, programın ve profil bilgilerin öncelikle <strong>senin cihazında</strong>, yerel bir veritabanında (Room/SQLite) tutulur. Uygulamanın çekirdek işlevleri internet olmadan çalışır.</p>
-<p>Bunun yanında <strong>açıkça kullandığın bazı özellikler sunucu gerektirir</strong>: mesajlaşma, hoca eşleşmesi, liderlik tablosu ve bulut yedeği. Bu belge hangi verinin ne zaman cihazdan çıktığını tek tek açıklar.</p>
+<p>Bunun yanında <strong>açıkça kullandığın bazı özellikler sunucu gerektirir</strong>: mesajlaşma, hoca eşleşmesi, liderlik tablosu, düellolar ve bulut yedeği. Bu belge hangi verinin ne zaman cihazdan çıktığını tek tek açıklar.</p>
 <p>Uygulamada <strong>reklam SDK'sı yoktur, analitik/izleme (Google Analytics, Firebase Analytics vb.) yoktur, reklam kimliği okunmaz.</strong> Hiçbir veri satılmaz veya pazarlama amacıyla üçüncü taraflarla paylaşılmaz.</p>
 <hr />
 <h2>1. Hesabın nasıl oluşur</h2>
@@ -63,75 +65,76 @@
 <h3>3.2. Mesajlaşma</h3>
 <p>Mesaj gövdelerin sunucuda <strong>uçtan uca şifreli</strong> saklanır. Şifre çözme anahtarı senin ve karşı tarafın cihazlarındaki özel anahtarlardan türetilir; <strong>sunucuda bulunmaz ve mesajların içeriği tarafımızdan okunamaz.</strong> Sohbette gönderilen fotoğraflar da şifreli saklanır.</p>
 <p>Sunucunun görebildiği şey <strong>üstveridir</strong>: hangi konuşmada, hangi zamanda, kaç mesaj olduğu.</p>
-<h3>3.3. Liderlik tablosu</h3>
+<h3>3.3. Bildirim jetonu</h3>
+<p>Uygulama kapalıyken de mesaj bildirimi alabilmen için cihazının <strong>Firebase bildirim jetonu</strong> açık anahtarınla eşleşmiş biçimde saklanır. Bu jeton, Google'ın senin cihazına ulaşmak için kullandığı adrestir; içinde ad, konum ya da başka bir kişisel bilgi yoktur ve yeni kurulumda değişir.</p>
+<p>Erişimi kilitlidir: jeton tablosu uygulamanın genel anahtarıyla <strong>ne okunabilir ne yazılabilir.</strong> Yazma yalnız sunucu tarafındaki bildirim servisinden geçer ve servis, yazmadan önce isteğin gerçekten o cihazın özel anahtarıyla <strong>imzalandığını doğrular</strong> — yani başkası senin satırına kendi jetonunu yazıp sana gelen bildirimleri üzerine alamaz.</p>
+<p>Hesabını sildiğinde jetonun da silinir.</p>
+<h3>3.4. Liderlik tablosu</h3>
 <p>Liderlik tablosuna katılırsan <strong>güç puanın, siklet grubun, cinsiyetin ve görünen adın</strong> herkese açık listelenir — bu bölüm tanımı gereği geneldir. Her satır cihazının özel anahtarıyla <strong>imzalanır</strong>; başkası senin adına satır yazamaz.</p>
-<h3>3.4. Hoca eşleşmesi ve arkadaşlık</h3>
+<h3>3.5. Hoca eşleşmesi ve arkadaşlık</h3>
 <p>Gönderdiğin ve aldığın eşleşme istekleri (kimden kime, tür, durum) saklanır ve <strong>çift taraflı imzalanır</strong>. Hoca başvurusu yaparsan başvurun saklanır.</p>
-<h3>3.5. Bulut yedeği (isteğe bağlı, varsayılan KAPALI)</h3>
+<h3>3.6. Düellolar (1v1 canlı yarış)</h3>
+<p>Düello başlattığında sunucuya giden veriler: <strong>görünen adın, cihazının açık anahtarı, seçtiğin hareket ve süre, ve yarış boyunca tekrar sayın.</strong> Buna ek olarak, yarış sürerken <strong>birkaç saniyede bir "hâlâ buradayım" zaman damgası</strong> gönderilir; bu, rakibi uygulamadan çıktığında ya da bağlantısı koptuğunda maçın sonsuza kadar açık kalmaması içindir. Rakibin de aynı bilgileri görür — düellonun tamamı budur.</p>
+<p>Plank düellosunda sayılacak tekrar olmadığı için gönderilen veri farklıdır: <strong>plank pozisyonunu tutup tutmadığın</strong>, ikinizin birden tuttuğu <strong>toplam süre</strong> ve <strong>ilk kimin düştüğü</strong>. Süreyi sunucu işletir; iki telefonun ayrı ayrı saydığı süre birbirinden ayrışıp kimin kazandığı tartışmalı hâle gelmesin diye. Tutma kararının kendisi (iskelet noktaları, gövde açısı) cihazından çıkmaz — sunucuya yalnız "tutuyor / tutmuyor" bilgisi gider.</p>
+<h4>Canlı görüntü</h4>
+<p>Düello sırasında <strong>kameran rakibinle canlı paylaşılır.</strong> Bu, uygulamanın geri kalanından farklı bir durumdur ve bilerek ayrı yazıyoruz: barkod, besin tablosu ve fotoğraftan kalori özelliklerinde görüntü cihazından hiç çıkmaz, düelloda çıkar.</p>
+<p>Nasıl çalıştığı:</p>
+<ul>
+<li><strong>Ses YOKTUR.</strong> Mikrofon izni hiç istenmez, uygulamanın mikrofona erişimi yoktur, bağlantıya ses eklenmez. Yalnız görüntü.</li>
+<li>Görüntü <strong>doğrudan iki telefon arasında</strong> akar (uçtan uca, P2P). Sunucularımızdan <strong>geçmez</strong>; sunucu yalnız bağlantı kurulurken birkaç kilobayt adres bilgisi taşır.</li>
+<li>Görüntü <strong>hiçbir yerde kaydedilmez</strong> — ne bizde, ne rakipte, ne senin cihazında. Yarış bitince akış kapanır.</li>
+<li>Bazı ağlarda doğrudan bağlantı kurulamaz; o durumda görüntü hiç açılmaz ve düello yalnız skorla oynanır.</li>
+<li><strong>Şikâyet ve engelleme</strong> yarış ekranındadır. Engellediğin kişiyle bir daha eşleştirilmezsin (bu, sunucuda tutulur). Şikâyetler incelenmek üzere bize ulaşır.</li>
+</ul>
+<h4>Tekrar sayımı</h4>
+<p><strong>İskelet noktaları cihazdan çıkmaz.</strong> Tekrar sayımı tamamen telefonunda yapılır (ML Kit Poz Algılama); ağa giden tek şey ortaya çıkan <strong>sayıdır</strong> (plank düellosunda ise yalnız "tutuyor / tutmuyor" bilgisi). Kameranın üstünde gördüğün iskelet çizimi de aynı şekilde cihazında üretilir ve hiçbir yere gönderilmez; rakibin ekranında senin iskeletin görünmez.</p>
+<p>Düello sonucu (galibiyet, mağlubiyet, beraberlik ve en yüksek skorun — plank düellolarında skor yerine <strong>en uzun tutma süren</strong>) <strong>düellolara ait ayrı bir sıralamada</strong> tutulur ve o sıralama herkese açıktır. Bu sayılar antrenman geçmişine, rankına veya haftalık hacmine <strong>yazılmaz</strong> — kamerayla sayma yaklaşık %85-90 doğrulukta olduğu için gerçek antrenman verini kirletmesine izin verilmez.</p>
+<p>Eşleşme odaları geçicidir. Rastgele eşleşmede rakibin <strong>kim olduğunu seçemezsin</strong>; karşına adını ve düello sıralamasını gördüğün bir kullanıcı çıkar.</p>
+<h3>3.7. Bulut yedeği (isteğe bağlı, varsayılan KAPALI)</h3>
 <p>Ayarlardan bulut yedeğini açarsan verilerin buluta yedeklenir. Yedek <strong>AES-256-GCM ile şifrelenir</strong> ve şifreleme anahtarı <strong>yalnızca senin hesap kodundan türetilir</strong> — anahtar sunucuya hiçbir zaman gönderilmez. Sunucuda duran şey, bizim de okuyamadığımız bir şifreli metindir.</p>
-<p>Yedeğin içeriği: profil ve kilo geçmişin, öğün kayıtların, programın, <strong>antrenman geçmişin</strong> (Health Connect'ten içe aktarılmış yürüyüşler dahil — bkz. madde 4) ve sohbet geçmişin.</p>
-<h2>4. Sağlık ve fitness verisi (Health Connect)</h2>
-<p>Uygulama, <strong>isteğe bağlı</strong> olarak açabileceğin "Sağlık senkronu" özelliğiyle Android'in <strong>Health Connect</strong> deposundan sağlık verisi okuyabilir. Bu bölüm, Google Play "Health apps" politikasının istediği açıklamadır.</p>
-<p><strong>Hangi veriler okunur (yalnızca bunlar):</strong></p>
+<p>Yedeğin içeriği: profil ve kilo geçmişin, öğün kayıtların, programın, <strong>antrenman geçmişin</strong> (adım sayacından içe aktarılmış yürüyüşler dahil — bkz. madde 4) ve sohbet geçmişin.</p>
+<h2>4. Adım verisi (telefonun kendi adım sayacı)</h2>
+<p>Uygulama, <strong>isteğe bağlı</strong> olarak açabileceğin "Adım senkronu" özelliğiyle <strong>telefonunun kendi donanım adım sayacını</strong> (<code>Sensor.TYPE_STEP_COUNTER</code>) okuyabilir.</p>
+<p><strong>Health Connect KULLANILMIYOR.</strong> Uygulama daha önce Android'in Health Connect deposundan sağlık verisi okuyordu; bu yol tamamen kaldırıldı. Artık hiçbir <code>android.permission.health.*</code> izni istenmez, Health Connect uygulamasıyla hiçbir iletişim kurulmaz ve başka hiçbir uygulamanın verisine erişilmez.</p>
+<p><strong>Hangi veri okunur (yalnızca bu):</strong></p>
 <table>
 <thead>
 <tr>
-<th>Health Connect izni</th>
+<th>İzin</th>
 <th>Veri türü</th>
 <th>Ne için</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>READ_STEPS</code></td>
-<td>Adım sayısı</td>
+<td><code>ACTIVITY_RECOGNITION</code></td>
+<td>Telefonun adım sayacının değeri</td>
 <td>Günlük yürüyüşü antrenman olarak yazmak</td>
-</tr>
-<tr>
-<td><code>READ_EXERCISE</code></td>
-<td>Yürüyüş/doğa yürüyüşü seanslarının başlangıç-bitiş zamanı</td>
-<td>Süreyi tahmin etmek yerine ölçmek. Diğer spor türleri ve rota okunmaz</td>
-</tr>
-<tr>
-<td><code>READ_DISTANCE</code></td>
-<td>Yürünen mesafe</td>
-<td>Mesafe ve hız hesabı; verilmezse adımdan tahmin edilir</td>
-</tr>
-<tr>
-<td><code>READ_SPEED</code></td>
-<td>Ortalama hız</td>
-<td>Yalnız mesafe okunamadığında kullanılır</td>
-</tr>
-<tr>
-<td><code>READ_ACTIVE_CALORIES_BURNED</code></td>
-<td>Aktif yakılan kalori (bazal metabolizma hariç)</td>
-<td>Günlük kalori bütçesi; verilmezse formülle tahmin edilir</td>
-</tr>
-<tr>
-<td><code>READ_HEALTH_DATA_IN_BACKGROUND</code></td>
-<td>Yukarıdakilerin arka planda okunması</td>
-<td>Uygulama kapalıyken de güncel kalmak; verilmezse senkron uygulamayı açtığında yapılır</td>
 </tr>
 </tbody>
 </table>
+<p>Kalp atışı, uyku, tansiyon, konum, rota gibi hiçbir veri okunmaz — okunacak tek şey bir sayıdır.</p>
 <p><strong>Nasıl kullanılır:</strong></p>
 <ul>
-<li>Özellik <strong>varsayılan olarak kapalıdır</strong>; yalnız Ayarlar &gt; "Sağlık senkronu" anahtarını sen açarsan çalışır.</li>
-<li>Okunan veriler <strong>ayrı bir arşiv olarak saklanmaz</strong>: son 7 günün özeti, senin elle girebileceğin türden bir "Walking" antrenman setine dönüştürülür ve bundan sonra sıradan bir antrenman kaydı gibi yaşar.</li>
-<li><strong>Yazma iznimiz yoktur:</strong> Health Connect'teki asıl kayıtların bizim tarafımızdan hiçbir zaman değiştirilmez veya silinmez.</li>
-<li>Sağlık verisi <strong>reklam, pazarlama veya profilleme amacıyla kullanılmaz</strong> ve üçüncü taraflara satılmaz/paylaşılmaz.</li>
+<li>Özellik <strong>varsayılan olarak kapalıdır</strong>; yalnız Ayarlar &gt; "Adım senkronu" anahtarını sen açarsan çalışır.</li>
+<li><strong>Geçmiş okunmaz:</strong> sayım izni verdiğin andan itibaren başlar. İzinden önceki günlere ait adım verisine erişilmez.</li>
+<li>Okunan değer <strong>ayrı bir arşiv olarak saklanmaz</strong>: günlük adım toplamı, senin elle girebileceğin türden bir "Walking" antrenman setine dönüştürülür ve bundan sonra sıradan bir antrenman kaydı gibi yaşar. Süre ve mesafe adım sayısından tahmin edilir; ölçüm değildir.</li>
+<li>Adım verisi <strong>reklam, pazarlama veya profilleme amacıyla kullanılmaz</strong> ve üçüncü taraflara satılmaz/paylaşılmaz.</li>
+<li>Yalnız telefonun yanındayken atılan adımlar sayılır; akıllı saatinin saydığı adımlar bu toplama girmez.</li>
 </ul>
-<p><strong>Cihazdan çıkar mı:</strong> Health Connect'ten okunan kayıtlar doğrudan hiçbir sunucuya gönderilmez. Ancak bunlardan üretilen <strong>yürüyüş antrenman setleri antrenman geçmişinin parçası olduğu için, bulut yedeğini açtıysan şifreli yedeğe dahil edilir</strong> (bkz. madde 3.5). Bulut yedeği kapalıyken bu veri cihazından hiç çıkmaz.</p>
+<p><strong>Cihazdan çıkar mı:</strong> Adım sayacından okunan değer doğrudan hiçbir sunucuya gönderilmez. Ancak bundan üretilen <strong>yürüyüş antrenman setleri antrenman geçmişinin parçası olduğu için, bulut yedeğini açtıysan şifreli yedeğe dahil edilir</strong> (bkz. madde 3.7). Bulut yedeği kapalıyken bu veri cihazından hiç çıkmaz.</p>
 <p><strong>Kontrol ve silme:</strong></p>
 <ul>
-<li>İzinleri istediğin an Health Connect uygulamasından (Android Ayarlar &gt; Health Connect &gt; Uygulama izinleri) geri alabilirsin.</li>
+<li>İzni istediğin an Android Ayarlar &gt; Uygulamalar &gt; CouldBeFit &gt; İzinler üzerinden geri alabilirsin.</li>
 <li>Anahtarı kapattığında okuma durur ve arka plan görevi iptal edilir.</li>
 <li>İçe aktarılmış yürüyüş setlerini tek tek silebilir ya da uygulamayı kaldırarak tüm yerel veriyle birlikte silebilirsin.</li>
 </ul>
 <h2>5. Bildirimler</h2>
 <ul>
 <li><strong>Yerel hatırlatmalar</strong> (antrenman, beslenme, motivasyon) tamamen cihazında üretilir; hiçbir veri dışarı gönderilmez.</li>
-<li><strong>Yönetici duyuruları</strong> için Firebase Cloud Messaging (FCM) kullanılır. Cihazın tek bir genel duyuru konusuna abone olur; <strong>kişisel veri gönderilmez</strong> ve duyurular herkese aynı içerikle gider, kişiselleştirilmez.</li>
+<li><strong>Yönetici duyuruları</strong> için Firebase Cloud Messaging (FCM) kullanılır. Cihazın tek bir genel duyuru konusuna abone olur; duyurular herkese aynı içerikle gider, kişiselleştirilmez ve kim olduğun sunucuya bildirilmez.</li>
+<li><strong>Mesaj bildirimleri</strong> de FCM ile gelir; uygulama kapalıyken de mesajı alabilmen için gereklidir. Bunun için cihazının <strong>bildirim jetonu</strong> açık anahtarınla eşleşmiş biçimde sunucuda saklanır (bkz. Madde 3.3). Gönderilen bildirim <strong>içerik taşımaz</strong> — mesajın metni FCM üzerinden geçmez; cihazın uyanır, mesajı sunucudan kendisi çeker ve bildirimi kendi çizer. Bildirimde gördüğün ad ve önizleme cihazında oluşturulur.</li>
+<li>Şifreli mesajlarda önizleme <strong>hiç gösterilmez</strong>, yalnız yeni mesaj olduğu söylenir.</li>
 </ul>
 <h2>6. Kilitlenme (çökme) raporları</h2>
 <p>Uygulama çöktüğünde sorunu bulabilmek için <strong>Firebase Crashlytics</strong> kullanılır.</p>
@@ -164,8 +167,8 @@
 </tr>
 <tr>
 <td><strong>Google Firebase (Cloud Messaging)</strong></td>
-<td>Duyuru bildirimleri</td>
-<td>Kişisel veri gönderilmez</td>
+<td>Duyuru ve mesaj bildirimleri</td>
+<td>Cihazın bildirim jetonu; bildirim içeriği gönderilmez</td>
 </tr>
 <tr>
 <td><strong>Google Firebase (Crashlytics)</strong></td>
@@ -181,11 +184,6 @@
 <td><strong>Hugging Face</strong></td>
 <td>Yapay zekâ modeli indirme</td>
 <td>Kullanıcı verisi gönderilmez</td>
-</tr>
-<tr>
-<td><strong>Health Connect</strong> (Android sistem bileşeni)</td>
-<td>Sağlık verisi okuma</td>
-<td>Ağ servisi değildir; iletişim tamamen cihaz içidir (IPC)</td>
 </tr>
 </tbody>
 </table>
@@ -218,7 +216,7 @@
 </tr>
 <tr>
 <td><code>CAMERA</code></td>
-<td>Barkod tarama, profil fotoğrafı ve sohbette fotoğraf gönderme. <strong>Barkodda görüntü cihazdan çıkmaz ve kaydedilmez</strong>, yalnız rakam okunur. İzin isteğe bağlıdır; reddedilirse barkod elle girilebilir.</td>
+<td>Barkod tarama, besin değeri tablosu okuma, düelloda tekrar sayma <strong>ve düelloda canlı görüntü</strong>, profil fotoğrafı, sohbette fotoğraf gönderme. Barkod/tablo/fotoğraf akışlarında <strong>görüntü cihazdan çıkmaz ve kaydedilmez</strong>. DÜELLO İSTİSNADIR: orada görüntü rakibinle canlı paylaşılır (bkz. madde 3.5) — yine de kaydedilmez ve ses hiç yoktur. İzin isteğe bağlıdır; reddedilirse barkod elle girilebilir ve düello videosuz oynanır.</td>
 </tr>
 <tr>
 <td><code>POST_NOTIFICATIONS</code></td>
@@ -229,12 +227,12 @@
 <td>Yapay zekâ modeli indirilirken indirmenin kesilmemesi</td>
 </tr>
 <tr>
-<td><code>health.*</code> (madde 4'teki altı izin)</td>
-<td><strong>Yalnızca "Sağlık senkronu" için</strong></td>
+<td><code>ACTIVITY_RECOGNITION</code></td>
+<td><strong>Yalnızca "Adım senkronu" için</strong> (madde 4)</td>
 </tr>
 </tbody>
 </table>
-<p>Konum, mikrofon, kişiler ve telefon durumu gibi hiçbir başka izin istenmez. Kamera izni yalnızca kullanıcı ilgili işlemi başlattığında gerekçesiyle sorulur; uygulama açılışında istenmez. Sağlık izinleri yalnızca "Sağlık senkronu" açıldığında, Health Connect'in kendi izin ekranından istenir; reddedilirse özellik sessizce kapalı kalır.</p>
+<p>Konum, <strong>mikrofon</strong>, kişiler ve telefon durumu gibi hiçbir başka izin istenmez — düelloda canlı görüntü olmasına rağmen mikrofon izni yoktur ve ses hiç iletilmez. Kamera izni yalnızca kullanıcı ilgili işlemi başlattığında gerekçesiyle sorulur; uygulama açılışında istenmez. Adım sayacı izni yalnızca "Adım senkronu" açıldığında, Android'in sıradan izin penceresinden istenir; reddedilirse özellik kapalı kalır ve bunu ayarlar ekranında açıkça söyler.</p>
 <h2>12. Değişiklikler</h2>
 <p>Bu politika değişirse, güncellenmiş sürüm bu sayfada yayınlanır ("Son güncelleme" tarihi güncellenir).</p>
 <h2>13. İletişim</h2>
