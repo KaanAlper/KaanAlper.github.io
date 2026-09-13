@@ -39,6 +39,16 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <a
+            href="https://github.com/kaanalper"
+            target="_blank"
+            rel="noreferrer"
+            className="nav-link nav-github"
+            aria-label="GitHub Profile"
+          >
+            <Github size={15} />
+            <span>GitHub</span>
+          </a>
           <a href="mailto:kaanalperkaraaslan@gmail.com" className="nav-email">Let's talk <ArrowUpRight size={14} /></a>
         </nav>
         <button className="menu-button" onClick={() => setOpen(!open)} aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open}>
@@ -50,6 +60,16 @@ export function SiteHeader() {
           {nav.map((item) => (
             <Link key={item.href} href={item.href} className="mobile-nav-link" onClick={close}>{item.label}</Link>
           ))}
+          <a
+            href="https://github.com/kaanalper"
+            target="_blank"
+            rel="noreferrer"
+            onClick={close}
+            className="mobile-nav-link"
+            style={{ display: "flex", alignItems: "center", gap: "10px" }}
+          >
+            <Github size={20} /> GitHub ↗
+          </a>
           <a href="mailto:kaanalperkaraaslan@gmail.com" onClick={close} className="mobile-nav-link">Let's talk ↗</a>
         </nav>
       )}
@@ -263,7 +283,7 @@ export function ContactLinks() {
     <div className="contact-links">
       <a href="mailto:kaanalperkaraaslan@gmail.com"><Mail size={17} /> Email</a>
       <a href="https://github.com/kaanalper" target="_blank" rel="noreferrer"><Github size={17} /> GitHub</a>
-      <a href="https://www.linkedin.com" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn</a>
+      <a href="https://www.linkedin.com/in/kaanalperkaraaslan/" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn</a>
     </div>
   );
 }

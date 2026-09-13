@@ -147,6 +147,7 @@ button { font: inherit; }
 .desktop-nav { display: flex; align-items: center; gap: clamp(24px, 1.8vw, 42px); font-family: "DM Mono", monospace; font-size: clamp(11px, 0.65vw, 14px); text-transform: uppercase; letter-spacing: .06em; }
 .nav-link { color: var(--color-text-muted); transition: color var(--duration-fast) var(--ease-out); padding-block: 8px; } .nav-link:hover, .nav-link.active { color: var(--paper); }
 .nav-link.active::after { content: ""; display: block; height: 1px; background: var(--cyan); margin-top: 3px; }
+.nav-github { display: inline-flex; align-items: center; gap: 6px; }
 .nav-email { margin-left: 8px; color: var(--ink); background: var(--paper); padding: clamp(10px, 0.65vw, 14px) clamp(13px, 0.85vw, 20px); font-size: clamp(12px, 0.72vw, 15px); border-radius: 4px; display: inline-flex; gap: 6px; align-items: center; text-transform: none; letter-spacing: 0; font-family: "DM Sans", sans-serif; font-weight: 600; transition: transform var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out); }.nav-email:hover { background: var(--cyan); transform: translateY(-2px); }
 .menu-button, .mobile-nav { display: none; }
 
