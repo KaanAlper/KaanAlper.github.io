@@ -153,6 +153,34 @@ export const projects: Project[] = [
     accentColor: "#ccff33",
   },
   {
+    slug: "connectsync",
+    number: "03.5",
+    title: "ConnectSync",
+    shortTitle: "P2P Drive Sync",
+    category: "Desktop · P2P Synchronization",
+    area: "desktop",
+    period: "2026 — present",
+    status: "Published Open Source",
+    summary: "A peer-to-peer, end-to-end encrypted folder synchronization tool powered by Google Drive.",
+    intro: "ConnectSync uses Google Drive as a dumb, encrypted transport layer to sync folders directly between devices using AES-256 without needing a central server.",
+    problem: "Most sync tools require you to create an account, pay for a subscription, or trust a third-party server with your data. ConnectSync provides a private alternative.",
+    architecture: ["Rust core", "Slint UI", "AES-GCM-256 encryption", "Tokio async", "Google Drive API"],
+    challenges: [
+      { title: "Peer-to-Peer Magic", detail: "Implemented out-of-band key sharing. The generated sync code grants folder access and provides the AES decryption key simultaneously." },
+      { title: "Native UI Threading", detail: "Ensured completely responsive UI during heavy file sync operations by properly bridging Tokio async tasks with Slint's event loop." }
+    ],
+    outcome: "A native, fast, and secure cross-platform synchronization tool.",
+    stack: ["Rust", "Slint", "Tokio", "Reqwest", "Google OAuth"],
+    featured: true,
+    heroLayout: "split-right",
+    motif: "grid",
+    links: [
+      { label: "Download & Details", href: "https://kaanalper.github.io/work/connectsync", type: "github" }
+    ],
+    showcaseImage: "/work/connectsync/promo-workout.webp", // Will act as fallback if not exist
+    accentColor: "#89b4fa",
+  },
+  {
     slug: "byteforge",
     number: "04",
     title: "ByteForge",
