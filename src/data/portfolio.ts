@@ -176,7 +176,6 @@ export const projects: Project[] = [
     heroLayout: "split-right",
     motif: "network",
     links: [
-      { label: "Download & Details", href: "https://kaanalper.github.io/work/connectsync", type: "github" }
     ],
     showcaseImage: "/work/connectsync/promo-workout.webp", // Will act as fallback if not exist
     accentColor: "#89b4fa",
