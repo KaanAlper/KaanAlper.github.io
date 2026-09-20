@@ -158,7 +158,7 @@ export const projects: Project[] = [
     title: "ConnectSync",
     shortTitle: "P2P Drive Sync",
     category: "Desktop · P2P Synchronization",
-    area: "desktop",
+    area: "systems",
     period: "2026 — present",
     status: "Published Open Source",
     summary: "A peer-to-peer, end-to-end encrypted folder synchronization tool powered by Google Drive.",
@@ -171,9 +171,10 @@ export const projects: Project[] = [
     ],
     outcome: "A native, fast, and secure cross-platform synchronization tool.",
     stack: ["Rust", "Slint", "Tokio", "Reqwest", "Google OAuth"],
+    evidence: "Public source code and AES-GCM-256 implementation on GitHub.",
     featured: true,
     heroLayout: "split-right",
-    motif: "grid",
+    motif: "network",
     links: [
       { label: "Download & Details", href: "https://kaanalper.github.io/work/connectsync", type: "github" }
     ],
