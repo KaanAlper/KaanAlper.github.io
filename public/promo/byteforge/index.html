@@ -6,16 +6,16 @@
 <title>ByteForge — Secure Peer-to-Peer Folder Synchronization</title>
 <meta name="description" content="A peer-to-peer, end-to-end encrypted folder synchronization tool powered by Google Drive.">
 <style>
-:root{--bg:#0f140a;--txt:#f2f5ed;--muted:#8b997c;--grn:#ff6f61;--grn2:#b4befe;--line:#212918;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--hand:"Caveat",cursive;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+:root{--bg:#11111b;--txt:#f2f5ed;--muted:#8b997c;--grn:#ff6f61;--grn2:#b4befe;--line:#212918;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--hand:"Caveat",cursive;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--txt);font-family:var(--sans);line-height:1.4;-webkit-font-smoothing:antialiased}
-.glow{position:fixed;top:-20vw;left:50%;width:80vw;height:80vw;background:radial-gradient(circle,rgba(137,180,250,0.12) 0,rgba(15,20,10,0) 70%);transform:translateX(-50%);pointer-events:none;z-index:-1}
+.glow{position:fixed;top:-20vw;left:50%;width:80vw;height:80vw;background:radial-gradient(circle,rgba(255,255,255,0.08) 0,rgba(15,20,10,0) 70%);transform:translateX(-50%);pointer-events:none;z-index:-1}
 .grain{position:fixed;inset:0;background:url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="g"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23g)" opacity="0.04"/%3E%3C/svg%3E');pointer-events:none;z-index:-1;opacity:.6}
 
 nav{display:flex;justify-content:space-between;padding:30px 5%;max-width:1200px;margin:0 auto}
 .back{font-family:var(--mono);font-size:12.5px;color:var(--muted);text-decoration:none;transition:color .2s;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
 .back:hover{color:var(--grn)}
-.lk a{font-family:var(--mono);font-size:12.5px;color:var(--grn);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(137,180,250,.3);transition:border .2s}
+.lk a{font-family:var(--mono);font-size:12.5px;color:var(--grn);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,.3);transition:border .2s}
 .lk a:hover{border-color:var(--grn)}
 
 .hero{padding:90px 5% 60px;text-align:center;max-width:900px;margin:0 auto}
@@ -26,8 +26,8 @@ h1{font-size:clamp(56px,10vw,96px);font-weight:800;letter-spacing:-.03em;line-he
 .lead b{color:var(--txt);font-weight:600}
 
 .cta{display:flex;justify-content:center;gap:16px;margin-bottom:50px;flex-wrap:wrap}
-.gplay{display:flex;align-items:center;background:#fff;color:#000;text-decoration:none;padding:12px 24px;border-radius:12px;font-family:var(--sans);transition:transform .2s,box-shadow .2s;box-shadow:0 10px 30px -10px rgba(137,180,250,.2)}
-.gplay:hover{transform:translateY(-2px);box-shadow:0 15px 40px -10px rgba(137,180,250,.3)}
+.gplay{display:flex;align-items:center;background:#fff;color:#000;text-decoration:none;padding:12px 24px;border-radius:12px;font-family:var(--sans);transition:transform .2s,box-shadow .2s;box-shadow:0 10px 30px -10px rgba(255,255,255,.2)}
+.gplay:hover{transform:translateY(-2px);box-shadow:0 15px 40px -10px rgba(255,255,255,.3)}
 .gplay svg{width:28px;height:28px;margin-right:12px}
 .gplay .t{display:flex;flex-direction:column;align-items:flex-start;line-height:1}
 .gplay small{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#555}
@@ -39,7 +39,7 @@ h1{font-size:clamp(56px,10vw,96px);font-weight:800;letter-spacing:-.03em;line-he
 .gplay.github small{color:var(--muted)}
 
 .tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
-.tags span{font-family:var(--mono);font-size:12px;color:var(--grn);background:rgba(137,180,250,.1);padding:6px 14px;border-radius:999px}
+.tags span{font-family:var(--mono);font-size:12px;color:var(--bg);background:var(--grn);font-weight:700;padding:6px 14px;border-radius:999px}
 
 .showcase{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 60px -20px rgba(0,0,0,.5);background:#1e1e2e;padding:40px;}
 .showcase img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
@@ -54,7 +54,7 @@ h2{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-.02em;margin-b
 .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:60px}
 .fcard{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:16px;padding:32px;transition:background .3s}
 .fcard:hover{background:rgba(255,255,255,.04)}
-.fcard.hi{background:rgba(137,180,250,.05);border-color:rgba(137,180,250,.2)}
+.fcard.hi{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.2)}
 .fcard svg{width:32px;height:32px;margin-bottom:24px}
 .fcard h3{font-size:20px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em}
 .fcard p{font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.7}
