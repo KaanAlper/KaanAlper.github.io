@@ -3,7 +3,7 @@ export type Area = "vision" | "production" | "systems" | "mobile";
 export type ProjectLink = {
   label: string;
   href: string;
-  type?: "github" | "play" | "demo" | "report" | "mail";
+  type?: "github" | "play" | "demo" | "report" | "mail" | "promo";
 };
 
 export type Project = {
@@ -84,6 +84,9 @@ export const projects: Project[] = [
     featured: true,
     heroLayout: "split-left",
     motif: "cad",
+    links: [
+      { label: "Promo Page", href: "/promo/clonify", type: "demo" }
+    ],
     accentColor: "#4ed4d3",
     showcaseImage: "/work/clonify/showcase.webp",
     galleryImages: [
@@ -115,6 +118,9 @@ export const projects: Project[] = [
     featured: true,
     heroLayout: "full-bleed",
     motif: "point-cloud",
+    links: [
+      { label: "Promo Page", href: "/promo/teknofest-aviation", type: "demo" }
+    ],
     accentColor: "#efbd63",
     showcaseImage: "/work/teknofest-aviation/showcase.webp",
   },
@@ -143,7 +149,8 @@ export const projects: Project[] = [
     heroLayout: "editorial",
     motif: "mobile",
     links: [
-      { label: "Google Play Store", href: "https://play.google.com/store/apps/details?id=com.kaan.couldbefit", type: "play" }
+      { label: "Google Play Store", href: "https://play.google.com/store/apps/details?id=com.kaan.couldbefit", type: "play" },
+      { label: "Promo Page", href: "/promo/couldbefit", type: "demo" }
     ],
     showcaseImage: "/work/couldbefit/promo-workout.webp",
     galleryImages: [
@@ -176,7 +183,7 @@ export const projects: Project[] = [
     heroLayout: "split-right",
     motif: "network",
     links: [
-    ],
+      { label: "Promo Page", href: "/promo/connectsync", type: "demo" }],
     showcaseImage: "/work/connectsync/promo-workout.webp", // Will act as fallback if not exist
     accentColor: "#89b4fa",
   },
@@ -205,7 +212,8 @@ export const projects: Project[] = [
     heroLayout: "compact",
     motif: "network",
     links: [
-      { label: "GitHub Repository", href: "https://github.com/KaanAlper/ByteForge", type: "github" }
+      { label: "GitHub Repository", href: "https://github.com/KaanAlper/ByteForge", type: "github" },
+      { label: "Promo Page", href: "/promo/byteforge", type: "demo" }
     ],
     accentColor: "#ff6f61",
   },
@@ -234,7 +242,8 @@ export const projects: Project[] = [
     heroLayout: "compact",
     motif: "network",
     links: [
-      { label: "GitHub Repository", href: "https://github.com/KaanAlper/AsenaPlug", type: "github" }
+      { label: "GitHub Repository", href: "https://github.com/KaanAlper/AsenaPlug", type: "github" },
+      { label: "Promo Page", href: "/promo/asenaplug", type: "demo" }
     ],
     showcaseImage: "/work/asenaplug/shot1.webp",
     galleryImages: [
