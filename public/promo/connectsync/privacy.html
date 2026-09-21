@@ -14,6 +14,8 @@ p {margin-bottom:20px; color:var(--muted);}
 h2 {font-size:22px; margin-top:30px; margin-bottom:10px;}
 ul {margin-left:20px; margin-bottom:20px; color:var(--muted);}
 li {margin-bottom:8px;}
+p a, li a {color:var(--grn2);}
+code {font-family:var(--mono); font-size:.9em; color:var(--txt);}
 .back {display:inline-block; margin-bottom:40px; font-family:var(--mono); font-size:12.5px; color:var(--grn); text-decoration:none; text-transform:uppercase; letter-spacing:.1em; font-weight:700;}
 .back:hover {color:var(--grn2);}
 </style>
@@ -23,7 +25,7 @@ li {margin-bottom:8px;}
     <a class="back" href="index.html">← Back to ConnectSync</a>
     
     <h1>Privacy Policy</h1>
-    <p>Last updated: September 20, 2026</p>
+    <p>Last updated: September 21, 2026</p>
     
     <p>This Privacy Policy applies to the ConnectSync desktop application and describes how your information is handled.</p>
 
@@ -31,21 +33,31 @@ li {margin-bottom:8px;}
     <p><strong>ConnectSync does not collect, transmit, or store any personal telemetry, usage data, or analytics on external servers.</strong> Everything happens directly between your device and your Google Drive account.</p>
 
     <h2>2. Google Drive Data</h2>
-    <p>ConnectSync requests access to your Google Drive to store and synchronize your files. When you authorize the app:</p>
+    <p>ConnectSync requests access to your Google Drive to store and synchronize your files. It requests exactly two Google API scopes, and no others:</p>
     <ul>
-      <li>We only use the <code>drive.file</code> scope, which means ConnectSync can only see, edit, and create files that it has created or that you specifically open with it. It cannot see your entire Google Drive.</li>
-      <li>Your files are encrypted locally on your machine using AES-GCM-256 before being uploaded to Google Drive.</li>
-      <li>The encryption keys are generated locally and never sent to any central server. They are only shared when you share your "Sync Code" with another peer.</li>
+      <li><code>https://www.googleapis.com/auth/drive.file</code> &mdash; lets ConnectSync see, edit, and create only the files and folders that it has created or that you specifically open with it. It cannot see the rest of your Google Drive.</li>
+      <li><code>https://www.googleapis.com/auth/drive.appdata</code> &mdash; lets ConnectSync read and write a single small file (<code>connectsync_keys.json</code>) in the hidden application-data folder of your own Google Drive. This is used to recover the encryption keys of your sync folders, so that you can find and continue your syncs on another computer signed in to the same Google account. Only ConnectSync can access this folder; it is not visible in your regular Drive file list.</li>
     </ul>
+    <p>How this data is protected and handled:</p>
+    <ul>
+      <li>Your files are encrypted locally on your machine using AES-GCM-256 before being uploaded to Google Drive.</li>
+      <li>Encryption keys are generated locally on your device. They are never sent to the developer or to any server operated by us. A copy of the key of each sync folder is stored in the <code>connectsync_keys.json</code> file described above, which lives inside your own Google Drive account and is governed by your Google account's security.</li>
+      <li>A key is shared with another person only when you intentionally give them your "Sync Code".</li>
+      <li>ConnectSync uses Google user data only to provide the folder synchronization feature you request. It does not use it for advertising, does not sell it, and does not transfer it to third parties.</li>
+    </ul>
+    <p>ConnectSync's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>.</p>
 
-    <h2>3. Local Storage</h2>
+    <h2>3. Revoking Access and Deleting Data</h2>
+    <p>You can revoke ConnectSync's access at any time from your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account permissions page</a>. You can delete the synchronized folders and the <code>connectsync_keys.json</code> application data at any time from within your Google Drive settings (Manage apps). We do not hold any copy of your data.</p>
+
+    <h2>4. Local Storage</h2>
     <p>Your authentication tokens are stored securely in your operating system's native credential manager (Windows Credential Manager, Linux Secret Service, or macOS Keychain). Sync configurations are stored locally on your disk.</p>
 
-    <h2>4. Data Sharing</h2>
-    <p>We do not share your data with anyone because we do not have it. The only way data is shared is if you intentionally give someone else your Sync Code.</p>
+    <h2>5. Data Sharing</h2>
+    <p>We do not share your data with anyone because we do not have it. Your data stays between your devices and your own Google Drive. The only way data is shared with another person is if you intentionally give them your Sync Code.</p>
 
-    <h2>5. Contact</h2>
-    <p>If you have any questions about this Privacy Policy, you can check the GitHub repository or contact the developer.</p>
+    <h2>6. Contact</h2>
+    <p>If you have any questions about this Privacy Policy or want your data deleted, contact the developer, Kaan Alper, at <a href="mailto:kaanalperkaraaslan@gmail.com">kaanalperkaraaslan@gmail.com</a>, or open an issue on the <a href="https://github.com/KaanAlper/ConnectSync" target="_blank" rel="noopener">GitHub repository</a>.</p>
   </div>
 </body>
 </html>
