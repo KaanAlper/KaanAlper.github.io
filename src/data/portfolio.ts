@@ -122,7 +122,6 @@ export const projects: Project[] = [
       { label: "Promo Page", href: "/promo/teknofest-aviation", type: "demo" }
     ],
     accentColor: "#efbd63",
-    showcaseImage: "/work/teknofest-aviation/showcase.webp",
   },
   {
     slug: "couldbefit",
@@ -184,7 +183,6 @@ export const projects: Project[] = [
     motif: "network",
     links: [
       { label: "Promo Page", href: "/promo/connectsync", type: "demo" }],
-    showcaseImage: "/work/connectsync/promo-workout.webp", // Will act as fallback if not exist
     accentColor: "#89b4fa",
   },
   {
@@ -280,6 +278,7 @@ export const projects: Project[] = [
     heroLayout: "split-left",
     motif: "point-cloud",
     accentColor: "#4ed4d3",
+    showcaseImage: "/work/teknofest-robotics/showcase.webp",
   },
   {
     slug: "teknofest-healthcare",
