@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
+  <url><loc>https://kaanalper.github.io/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://kaanalper.github.io/work</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://kaanalper.github.io/about</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kaanalper.github.io/contact</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kaanalper.github.io/work/clonify</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kaanalper.github.io/work/teknofest-aviation</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kaanalper.github.io/work/couldbefit</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kaanalper.github.io/work/connectsync</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kaanalper.github.io/work/byteforge</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kaanalper.github.io/work/asenaplug</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kaanalper.github.io/work/teknofest-robotics</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kaanalper.github.io/work/teknofest-healthcare</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kaanalper.github.io/work/linux-systems</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kaanalper.github.io/work/ai-grand-prix</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+</urlset>
