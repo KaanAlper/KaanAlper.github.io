@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Privacy Policy — ConnectSync</title>
+<title>Privacy Policy — ByteForge</title>
 <style>
-:root{--bg:#11111b;--txt:#f2f5ed;--muted:#8b997c;--grn:#89b4fa;--grn2:#b4befe;--line:#212918;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--hand:"Caveat",cursive;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+:root{--bg:#11111b;--txt:#f2f5ed;--muted:#8b997c;--grn:#ff6f61;--grn2:#b4befe;--line:#212918;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--hand:"Caveat",cursive;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--txt);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased; padding: 40px 5%;}
 .wrap{max-width:800px;margin:0 auto}
@@ -20,32 +20,33 @@ li {margin-bottom:8px;}
 </head>
 <body>
   <div class="wrap">
-    <a class="back" href="index.html">← Back to ConnectSync</a>
-    
+    <a class="back" href="index.html">← Back to ByteForge</a>
+
     <h1>Privacy Policy</h1>
-    <p>Last updated: September 20, 2026</p>
-    
-    <p>This Privacy Policy applies to the ConnectSync desktop application and describes how your information is handled.</p>
+    <p>Last updated: September 22, 2026</p>
+
+    <p>This Privacy Policy applies to the ByteForge desktop application and describes how your information is handled.</p>
 
     <h2>1. Data We Collect</h2>
-    <p><strong>ConnectSync does not collect, transmit, or store any personal telemetry, usage data, or analytics on external servers.</strong> Everything happens directly between your device and your Google Drive account.</p>
+    <p><strong>ByteForge does not collect, transmit, or store any personal telemetry, usage data, or analytics on external servers.</strong> Static binary analysis, disassembly and memory inspection all happen entirely on your local machine.</p>
 
-    <h2>2. Google Drive Data</h2>
-    <p>ConnectSync requests access to your Google Drive to store and synchronize your files. When you authorize the app:</p>
+    <h2>2. Files & Process Access</h2>
     <ul>
-      <li>We only use the <code>drive.file</code> scope, which means ConnectSync can only see, edit, and create files that it has created or that you specifically open with it. It cannot see your entire Google Drive.</li>
-      <li>Your files are encrypted locally on your machine using AES-GCM-256 before being uploaded to Google Drive.</li>
-      <li>The encryption keys are generated locally and never sent to any central server. They are only shared when you share your "Sync Code" with another peer.</li>
+      <li>ByteForge reads the binary files (APK, ELF, PE and similar) and the running process memory that you explicitly open or attach to. It never accesses files or processes outside what you point it at.</li>
+      <li>Any patches or memory edits you make are written only to the file or process you are working with — nothing is uploaded anywhere.</li>
     </ul>
 
     <h2>3. Local Storage</h2>
-    <p>Your authentication tokens are stored securely in your operating system's native credential manager (Windows Credential Manager, Linux Secret Service, or macOS Keychain). Sync configurations are stored locally on your disk.</p>
+    <p>Application settings, recent-file history and workspace state are stored locally on your disk. No account or cloud sync is required or used to run the application.</p>
 
-    <h2>4. Data Sharing</h2>
-    <p>We do not share your data with anyone because we do not have it. The only way data is shared is if you intentionally give someone else your Sync Code.</p>
+    <h2>4. Network Access</h2>
+    <p>ByteForge is offline-first: it does not require an internet connection to inspect or patch the files and processes you open. The only outbound request it may make is an optional check for newer releases on GitHub.</p>
 
-    <h2>5. Contact</h2>
-    <p>If you have any questions about this Privacy Policy, you can check the GitHub repository or contact the developer.</p>
+    <h2>5. Legal & Responsible Use</h2>
+    <p>ByteForge is a research and engineering tool. You are responsible for ensuring your use of its reverse engineering, disassembly and memory-editing features complies with applicable law and the terms of any software you analyze.</p>
+
+    <h2>6. Contact</h2>
+    <p>If you have any questions about this Privacy Policy, you can check the GitHub repository or contact the developer at kaanalperkaraaslan@gmail.com.</p>
   </div>
 </body>
 </html>
