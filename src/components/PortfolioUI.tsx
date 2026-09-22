@@ -215,7 +215,7 @@ export function ScrollScrubCanvas({ motif, className = "" }: { motif: CanvasMoti
     };
   }, [motif]);
 
-  return <canvas ref={canvasRef} className={`scroll-scrub-canvas ${className}`} aria-label={`${motif} technical animation`} />;
+  return <canvas ref={canvasRef} className={`scroll-scrub-canvas ${className}`} aria-hidden="true" role="presentation" />;
 }
 
 function drawFrame(ctx: CanvasRenderingContext2D, width: number, height: number, t: number, motif: CanvasMotif) {
@@ -270,7 +270,7 @@ function drawMobileFrame(ctx: CanvasRenderingContext2D, w: number, h: number, t:
 }
 
 export function ProjectSchematic({ area }: { area: Area }) {
-  return <div className={`project-schematic ${areas[area].color}`} aria-label="Category-specific technical project schematic">
+  return <div className={`project-schematic ${areas[area].color}`} aria-hidden="true">
     {area === "vision" && <svg viewBox="0 0 600 240" preserveAspectRatio="none"><path d="M0 180C90 60 145 60 210 150S330 230 390 80s120-60 210-20" fill="none" stroke="currentColor" /><path d="M0 130C80 30 145 100 220 110s130 50 190-30 120-10 190 20" fill="none" stroke="currentColor" opacity=".45" /><g fill="currentColor">{[55,145,260,380,500].map((x, i) => <circle key={x} cx={x} cy={120 + (i % 2) * 35} r="5" />)}</g></svg>}
     {area === "production" && <svg viewBox="0 0 600 240" preserveAspectRatio="none"><path d="M65 30v170h490M65 75h490M65 120h490M65 165h490M150 30v170M240 30v170M330 30v170M420 30v170M510 30v170" fill="none" stroke="currentColor" opacity=".28" /><path d="m80 165 65-30 50 14 68-75 54 46 73-30 55-49 62 44" fill="none" stroke="currentColor" strokeWidth="3" /><circle cx="410" cy="116" r="8" fill="currentColor" /></svg>}
     {area === "systems" && <svg viewBox="0 0 600 240" preserveAspectRatio="none"><g fill="none" stroke="currentColor"><path d="M100 72h120l80 76h110l80-70h80M220 72l80-55 110 55M300 148l-80 50h-90M410 148l90 50" /><rect x="70" y="48" width="60" height="48" /><rect x="270" y="124" width="60" height="48" /><rect x="470" y="48" width="60" height="48" /></g><g fill="currentColor"><circle cx="220" cy="72" r="6" /><circle cx="410" cy="148" r="6" /><circle cx="500" cy="198" r="5" /></g></svg>}
@@ -286,14 +286,6 @@ export function ContactLinks() {
       <a href="https://www.linkedin.com/in/kaanalperkaraaslan/" target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn</a>
     </div>
   );
-}
-
-function drawCadFrame(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
-  ctx.strokeStyle = "rgba(255,111,97,.52)"; ctx.lineWidth = 1;
-  for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.ellipse(w * .52, h * .5, w * (.16 + i * .08), h * (.16 + i * .045), t * .5 + i * .18, 0, Math.PI * 2); ctx.stroke(); }
-  const outline: [number, number][] = [];
-  for (let i = 0; i <= 32; i++) { const a = i / 32 * Math.PI * 2; outline.push([w * (.52 + Math.cos(a) * (.24 + .03 * Math.sin(a * 3 + t * 5))), h * (.5 + Math.sin(a) * (.22 + .04 * Math.cos(a * 2))) ]); }
-  strokeLine(ctx, "#ff6f61", 2, outline); ctx.fillStyle = "#efbd63"; ctx.beginPath(); ctx.arc(w * (.52 + Math.cos(t * 6) * .2), h * (.5 + Math.sin(t * 6) * .16), 4, 0, Math.PI * 2); ctx.fill();
 }
 
 function drawDecisionTreeFrame(ctx: CanvasRenderingContext2D, w: number, h: number, t: number) {
