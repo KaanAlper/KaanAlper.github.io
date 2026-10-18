@@ -4,15 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="robots" content="noindex" />
     <script>
+      // GitHub Pages paths are case-sensitive; this page makes them not: /ABOUT, /Promo/ByteForge and /underrune/play
+      // find /about, /promo/byteforge/ and /UnderRune/play/.
       (function () {
-        var path = window.location.pathname + window.location.search + window.location.hash;
-        // GitHub Pages paths are case-sensitive: /underrune (any case) goes to the UnderRune project site.
-        var project = window.location.pathname.match(/^\/underrune(\/.*)?$/i);
-        if (project && !/^\/UnderRune(\/|$)/.test(window.location.pathname)) {
-          window.location.replace('/UnderRune' + (project[1] || '/') + window.location.search + window.location.hash);
-          return;
+        var loc = window.location;
+        var path = loc.pathname + loc.search + loc.hash;
+        var segment = loc.pathname.split('/')[1] || '';
+        var rest = loc.pathname.slice(1 + segment.length) || '/';
+        function go(url) { window.location.replace(url + loc.search + loc.hash); }
+        // The portfolio's own pages (the app lowercases its routes).
+        function home() { window.location.replace('/?p=' + encodeURIComponent(path)); }
+        // Another repository's Pages site whose name matches the first segment in any case.
+        function project() {
+          var first = segment.toLowerCase();
+          if (!first) return home();
+          var to = function (name) { if (name === segment) home(); else go('/' + name + rest); };
+          var known = ['UnderRune'];
+          for (var i = 0; i < known.length; i++) if (known[i].toLowerCase() === first) return to(known[i]);
+          var done = false;
+          var timer = setTimeout(function () { if (!done) { done = true; home(); } }, 2500);
+          fetch('https://api.github.com/users/KaanAlper/repos?per_page=100')
+            .then(function (r) { return r.ok ? r.json() : []; })
+            .then(function (repos) {
+              if (done) return;
+              done = true; clearTimeout(timer);
+              var match = repos.filter(function (r) { return r.has_pages && r.name.toLowerCase() === first; })[0];
+              if (match) to(match.name); else home();
+            })
+            .catch(function () { if (!done) { done = true; clearTimeout(timer); home(); } });
         }
-        window.location.replace('/?p=' + encodeURIComponent(path));
+        // A static page of this site (case-paths.json lists them at build time).
+        fetch('/case-paths.json')
+          .then(function (r) { return r.ok ? r.json() : []; })
+          .then(function (pages) {
+            var want = loc.pathname.toLowerCase();
+            var match = pages.filter(function (p) { return p.toLowerCase() === want; })[0] ||
+              pages.filter(function (p) { return p.toLowerCase() === want + '/'; })[0];
+            if (match && match !== loc.pathname) go(match); else project();
+          })
+          .catch(project);
       })();
     </script>
     <title>Redirecting…</title>

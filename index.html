@@ -26,7 +26,10 @@
       (function () {
         var requestedPath = new URLSearchParams(window.location.search).get('p');
         if (requestedPath && requestedPath.startsWith('/')) {
-          window.history.replaceState(null, '', requestedPath);
+          // Every page's path is lowercase, so /About and /ABOUT open /about (the query and hash keep their case).
+          var cut = requestedPath.search(/[?#]/);
+          if (cut < 0) cut = requestedPath.length;
+          window.history.replaceState(null, '', requestedPath.slice(0, cut).toLowerCase() + requestedPath.slice(cut));
         }
       })();
     </script>
