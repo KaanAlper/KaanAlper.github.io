@@ -6,6 +6,12 @@
     <script>
       (function () {
         var path = window.location.pathname + window.location.search + window.location.hash;
+        // GitHub Pages paths are case-sensitive: /underrune (any case) goes to the UnderRune project site.
+        var project = window.location.pathname.match(/^\/underrune(\/.*)?$/i);
+        if (project && !/^\/UnderRune(\/|$)/.test(window.location.pathname)) {
+          window.location.replace('/UnderRune' + (project[1] || '/') + window.location.search + window.location.hash);
+          return;
+        }
         window.location.replace('/?p=' + encodeURIComponent(path));
       })();
     </script>
